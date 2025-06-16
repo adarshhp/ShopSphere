@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>shopyysite-912</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	    <packaging>pom</packaging> <!-- 👈 MUST be 'pom' for parent -->
 	<name>shopyysite-912</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -60,4 +61,9 @@
 		</plugins>
 	</build>
 
+	<modules>
+		<module>LoginService</module>
+	</modules>
 </project>
+
+
