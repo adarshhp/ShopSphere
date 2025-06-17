@@ -51,6 +51,15 @@ public class SignupController {
 	
 	@PostMapping("/createuser")
 	public SignInResponse SignIn(@RequestBody UserDetails userdetails) {
-		return service.SignIn(userdetails);
+		
+		 UserDetails user = new UserDetails();
+		    user.setUserName(userdetails.getUserName());
+		    user.setEmail(userdetails.getEmail());
+		    user.setPassword(userdetails.getPassword());
+		    
+		    // Set a default or derived value for userType
+		    user.setUserType(userdetails.getUserType()); // default type
+
+		return service.SignIn(user);
 	}
 }
