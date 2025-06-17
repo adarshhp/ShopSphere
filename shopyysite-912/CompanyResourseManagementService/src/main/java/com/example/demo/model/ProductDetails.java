@@ -1,0 +1,81 @@
+package com.example.demo.model;
+
+import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "product_table")
+public class ProductDetails {
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Integer prod_id;
+	    private String Model_no;
+	    private String Product_name;
+	    private String Product_category;
+	    private Integer Product_price;
+	    private LocalDate Man_date;
+	    private Integer Warrany_tenure;
+	    private String Product_image;
+		private Integer Company_id;
+
+	    public Integer getProd_id() {
+			return prod_id;
+		}
+		public void setProd_id(Integer prod_id) {
+			this.prod_id = prod_id;
+		}
+		public String getModel_no() {
+			return Model_no;
+		}
+		public void setModel_no(String model_no) {
+			Model_no = model_no;
+		}
+		public String getProduct_name() {
+			return Product_name;
+		}
+		public void setProduct_name(String product_name) {
+			Product_name = product_name;
+		}
+		public String getProduct_category() {
+			return Product_category;
+		}
+		public void setProduct_category(String product_category) {
+			Product_category = product_category;
+		}
+		public Integer getProduct_price() {
+			return Product_price;
+		}
+		public void setProduct_price(Integer product_price) {
+			Product_price = product_price;
+		}
+		public LocalDate getMan_date() {
+			return Man_date;
+		}
+		public void setMan_date(LocalDate man_date) {
+			Man_date = man_date;
+		}
+		public Integer getWarrany_tenure() {
+			return Warrany_tenure;
+		}
+		public void setWarrany_tenure(Integer warrany_tenure) {
+			Warrany_tenure = warrany_tenure;
+		}
+		public String getProduct_image() {
+			return Product_image;
+		}
+		public void setProduct_image(String product_image) {
+			Product_image = product_image;
+		}
+		public Integer getCompany_id() {
+			return Company_id;
+		}
+		public void setCompany_id(Integer company_id) {
+			Company_id = company_id;
+		}
+
+}

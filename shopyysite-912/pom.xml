@@ -63,6 +63,8 @@
 
 	<modules>
 		<module>LoginService</module>
+		<module>CompanyResourseManagementService</module>
+		<module>SellerManagementService</module>
 	</modules>
 </project>
 
