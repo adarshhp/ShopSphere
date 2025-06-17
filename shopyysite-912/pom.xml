@@ -39,7 +39,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+ 
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -51,7 +51,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+ 
 	<build>
 		<plugins>
 			<plugin>
@@ -60,10 +60,11 @@
 			</plugin>
 		</plugins>
 	</build>
-
+ 
 	<modules>
 		<module>LoginService</module>
+		<module>CompanyResourseManagementService</module>
+		<module>SellerManagementService</module>
 	</modules>
 </project>
-
-
+ 
