@@ -6,8 +6,19 @@ public class LoginResponse {
     private int statusCode;
     private String message;  // ✅ use lowercase 'message'
     private String jwt;
+    private Integer user_type;
 
-    // Getters and Setters
+    public Integer getUser_type() {
+		return user_type;
+	}
+
+
+	public void setUser_type(Integer user_type) {
+		this.user_type = user_type;
+	}
+
+
+	// Getters and Setters
     public int getStatusCode() {
         return statusCode;
     }
