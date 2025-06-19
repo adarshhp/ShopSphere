@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.InventoryItem;
@@ -10,6 +12,8 @@ import com.example.demo.model.PurchaseTable;
 import com.example.demo.repository.PurchaseRepository;
 import com.example.demo.repository.SellerRepository;
 import com.example.demo.response.PostResponse;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class SellerService implements ISellerService {
@@ -49,5 +53,100 @@ public class SellerService implements ISellerService {
 	public List<InventoryItem> GetAllInventory(@RequestParam Integer Seller_Id){
 		return sellerRepository.GetAllInventory(Seller_Id);
 	}
+	public List<PurchaseTable> GetPurchases(@RequestParam Integer Seller_Id){
+		return purchaseRepository.GetPurchases(Seller_Id);
+	}
+	public PostResponse EditInventory(InventoryItem newItem, Integer purchaseId) {
+	    PostResponse resp = new PostResponse();
+
+	    Optional<InventoryItem> existingOpt = sellerRepository.findById(purchaseId);
+	    if (existingOpt.isPresent()) {
+	        InventoryItem existing = existingOpt.get();
+
+	        // Update all fields except the ID
+	        existing.setModel_no(newItem.getModel_no());
+	        existing.setCompany_id(newItem.getCompany_id());
+	        existing.setCategory_id(newItem.getCategory_id());
+	        existing.setPurchase_date(newItem.getPurchase_date());
+	        existing.setPrice(newItem.getPrice());
+	        existing.setWarranty(newItem.getWarranty());
+	        existing.setImage(newItem.getImage());
+	        existing.setSeller_id(newItem.getSeller_id());
+
+	        sellerRepository.save(existing);
+	        resp.setStatusCode(200);
+	        resp.setMessage("Inventory updated successfully.");
+	    } else {
+	        resp.setStatusCode(404);
+	        resp.setMessage("Inventory with purchase_id " + purchaseId + " not found.");
+	    }
+
+	    return resp;
+	}
+	
+	@Transactional
+	public PostResponse DeleteInventory(@RequestParam Integer purchase_id) {
+	    int rowsAffected = sellerRepository.DeleteInventory(purchase_id);
+	    
+	    PostResponse response = new PostResponse();
+	    if (rowsAffected > 0) {
+	        response.setStatusCode(200);
+	        response.setMessage("Inventory item soft-deleted successfully.");
+	    } else {
+	        response.setStatusCode(404);
+	        response.setMessage("No inventory item found with the given ID.");
+	    }
+
+	    return response;
+	}
+	
+	public PostResponse EditPurchase(@RequestBody PurchaseTable purchaseItem, @RequestParam Integer sale_id) {
+	    PostResponse resp = new PostResponse();
+
+	    Optional<PurchaseTable> existingOpt = purchaseRepository.findById(sale_id);
+
+	    if (existingOpt.isPresent()) {
+	        PurchaseTable existing = existingOpt.get();
+
+	        // Update all fields
+	        existing.setCustomer_id(purchaseItem.getCustomer_id());
+	        existing.setModelNo(purchaseItem.getModelNo());
+	        existing.setPrice(purchaseItem.getPrice());
+	        existing.setPurchase_date(purchaseItem.getPurchase_date());
+	        existing.setWarranty(purchaseItem.getWarranty());
+	        existing.setName(purchaseItem.getName());
+	        existing.setEmail(purchaseItem.getEmail());
+	        existing.setPhono(purchaseItem.getPhono());
+	        existing.setSeller_id(purchaseItem.getSeller_id());
+
+	        // Save the updated entity
+	        purchaseRepository.save(existing);
+
+	        resp.setStatusCode(200);
+	        resp.setMessage("Purchase updated successfully.");
+	    } else {
+	        resp.setStatusCode(404);
+	        resp.setMessage("Purchase with sale_id " + sale_id + " not found.");
+	    }
+
+	    return resp;
+	}
+	
+	@Transactional
+	public PostResponse DeletePurchase(@RequestParam Integer sale_id) {
+		int rows = purchaseRepository.DeletePurchase(sale_id);
+		 PostResponse response = new PostResponse();
+		    if (rows > 0) {
+		        response.setStatusCode(200);
+		        response.setMessage("Inventory item soft-deleted successfully.");
+		    } else {
+		        response.setStatusCode(404);
+		        response.setMessage("No inventory item found with the given ID.");
+		    }
+		    return response;
+		
+	}
+
+
 
 }

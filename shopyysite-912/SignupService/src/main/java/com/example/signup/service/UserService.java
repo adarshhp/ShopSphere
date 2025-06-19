@@ -55,13 +55,14 @@ public class UserService implements IUserService {
             System.out.println("JWT Token: " + token); // or return it in response
             obj.setJwt(token);
             obj.setStatusCode(200);
-            obj.setMessage("Logged In");
+           // obj.setMessage("Logged In");
             obj.setUser_type(user.getUserType());
+            obj.setUser_id(user.getUserId());
             return obj;
         }else {
         	obj.setJwt("");
             obj.setStatusCode(400);
-            obj.setMessage("Invalid credentials");
+            //obj.setMessage("Invalid credentials");
             obj.setUser_type(null);
             return obj;
         }
