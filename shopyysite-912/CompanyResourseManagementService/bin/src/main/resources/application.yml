@@ -3,9 +3,9 @@ spring:
     name: shopyysite-912
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/CustomerCom
+    url: jdbc:postgresql://localhost:5432/shopify_db
     username: postgres
-    password: postgres
+    password: Wow3password
 
   jpa:
     hibernate:
@@ -16,4 +16,4 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
-  port: 2089
+  port: 1088
