@@ -3,15 +3,9 @@ spring:
     name: shopyysite-912
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/shopify_db
+    url: jdbc:postgresql://localhost:5432/CustomerCom
     username: postgres
-    password: Wow3password
-    driver-class-name: org.postgresql.Driver
-
-  servlet:
-    multipart:
-      max-file-size: 5MB
-      max-request-size: 5MB
+    password: postgres
 
   jpa:
     hibernate:
@@ -22,4 +16,4 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
-  port: 1088
+  port: 1089

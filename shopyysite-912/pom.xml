@@ -66,6 +66,7 @@
 		<module>CompanyResourseManagementService</module>
 		<module>SellerManagementService</module>
 		<module>SignUpService</module>
+		<module>CustomerService</module>
 	</modules>
 </project>
  
