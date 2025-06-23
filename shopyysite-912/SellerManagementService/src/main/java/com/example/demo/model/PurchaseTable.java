@@ -15,13 +15,27 @@ public class PurchaseTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer sale_id;
 private Integer customer_id;
-private String Model_no;
+private String modelNo;
 private Integer Price;
 private LocalDate purchase_date;
 private Integer Warranty;
 private String Name;
 private String Email;
 private Integer Phono;
+private Integer seller_id;
+private Integer is_deleted=0;
+public Integer getIs_deleted() {
+	return is_deleted;
+}
+public void setIs_deleted(Integer is_deleted) {
+	this.is_deleted = is_deleted;
+}
+public Integer getSeller_id() {
+	return seller_id;
+}
+public void setSeller_id(Integer seller_id) {
+	this.seller_id = seller_id;
+}
 public Integer getSale_id() {
 	return sale_id;
 }
@@ -34,11 +48,13 @@ public Integer getCustomer_id() {
 public void setCustomer_id(Integer customer_id) {
 	this.customer_id = customer_id;
 }
-public String getModel_no() {
-	return Model_no;
+
+
+public String getModelNo() {
+	return modelNo;
 }
-public void setModel_no(String model_no) {
-	Model_no = model_no;
+public void setModelNo(String modelNo) {
+	this.modelNo = modelNo;
 }
 public Integer getPrice() {
 	return Price;

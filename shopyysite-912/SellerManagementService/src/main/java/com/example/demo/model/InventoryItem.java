@@ -22,8 +22,15 @@ public class InventoryItem {
 	private Integer warranty;
 	private String image;
 	private Integer seller_id;
+	private Integer is_deleted = 0;
 	public Integer getSeller_id() {
 		return seller_id;
+	}
+	public Integer getIs_deleted() {
+		return is_deleted;
+	}
+	public void setIs_deleted(Integer is_deleted) {
+		this.is_deleted = is_deleted;
 	}
 	public void setSeller_id(Integer seller_id) {
 		this.seller_id = seller_id;

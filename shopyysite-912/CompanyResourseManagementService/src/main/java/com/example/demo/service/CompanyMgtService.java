@@ -40,6 +40,14 @@ public List<ProductDetails> getProducts(@RequestParam Integer company_id){
 	return companyMgtRepository.getProducts(company_id);
 }
 
+@Override
+public ProductDetails getProductDetailsByModelNo(@RequestParam String Model_no) {
+	return companyMgtRepository.getProductDetailsByModelNo(Model_no);
+}
 
+@Override
+public List<ProductDetails> getProductsByModelNos(@RequestParam List<String> modelNos){
+	return companyMgtRepository.getProductsByModelNos(modelNos);
+}
 
 }

@@ -4,11 +4,22 @@ package com.example.signup.model.response;
 public class LoginResponse {
 
     private int statusCode;
-    private String message;  // ✅ use lowercase 'message'
+    //private String message;  // ✅ use lowercase 'message'
     private String jwt;
     private Integer user_type;
+    private Integer users_id;
 
-    public Integer getUser_type() {
+    public Integer getUser_id() {
+		return users_id;
+	}
+
+
+	public void setUser_id(Integer user_id) {
+		this.users_id = user_id;
+	}
+
+
+	public Integer getUser_type() {
 		return user_type;
 	}
 
@@ -24,13 +35,13 @@ public class LoginResponse {
     }
 
    
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+//    public String getMessage() {
+//        return message;
+//    }
+//
+//    public void setMessage(String message) {
+//        this.message = message;
+//    }
 
     public String getJwt() {
         return jwt;

@@ -23,7 +23,14 @@ public class CompanyView {
 	private LocalDate purchase_date;
 	private LocalDate warranty_period;
 	private String image;
-	private Integer warranty_status;
+	private Integer warranty_status=1;
+	private Integer company_id;
+	public Integer getCompany_id() {
+		return company_id;
+	}
+	public void setCompany_id(Integer company_id) {
+		this.company_id = company_id;
+	}
 	public Integer getWarranty_request_id() {
 		return warranty_request_id;
 	}

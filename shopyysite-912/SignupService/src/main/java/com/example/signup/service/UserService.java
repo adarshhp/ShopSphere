@@ -13,6 +13,8 @@ import com.example.signup.model.response.LoginResponse;
 import com.example.signup.model.response.SignInResponse;
 import com.example.signup.repository.SignupRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserService implements IUserService {
 
@@ -26,6 +28,7 @@ public class UserService implements IUserService {
         this.jwtUtil = jwtUtil;
     }
 
+    @Transactional
     @Override
     public SignInResponse SignIn(UserDetails userDetails) {
         userDetails.setPassword(passwordEncoder.encode(userDetails.getPassword()));
@@ -55,13 +58,14 @@ public class UserService implements IUserService {
             System.out.println("JWT Token: " + token); // or return it in response
             obj.setJwt(token);
             obj.setStatusCode(200);
-            obj.setMessage("Logged In");
+           // obj.setMessage("Logged In");
             obj.setUser_type(user.getUserType());
+            obj.setUser_id(user.getUserId());
             return obj;
         }else {
         	obj.setJwt("");
             obj.setStatusCode(400);
-            obj.setMessage("Invalid credentials");
+            //obj.setMessage("Invalid credentials");
             obj.setUser_type(null);
             return obj;
         }

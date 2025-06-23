@@ -2,18 +2,25 @@ package com.example.customer.service;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.example.customer.model.CompanyView;
 import com.example.customer.model.CustomerDetails;
+import com.example.demo.payload.CustomerRegPayload;
+import com.example.demo.payload.PostResponse;
+import com.example.demo.payload.RaiseWarrantyPayload;
 
 public interface ICustomerService {
-    CustomerDetails registerCustomer(CustomerDetails customerDetails);
-    List<CustomerDetails> getAllCustomers();
-    
-    CompanyView saveWarrantyRequest(CompanyView view);
-    List<CompanyView> getAllWarrantyRequests();
-    
-    List<CustomerDetails> getCustomerDetailsByCustomerId(Integer customerId);
-    
+	public PostResponse registercustomer(@RequestBody CustomerRegPayload customerRegPayload);
+	public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId);   
+	
+	 public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id);
+	 public List<CompanyView> getRaisedWarrantyRequestsForCustomer(@RequestParam Integer userId);
+	 
+	public PostResponse raiseWarrantyRequest(@RequestBody RaiseWarrantyPayload view);
+	    
     CustomerDetails updateCustomer(Integer purchase_Id, CustomerDetails updatedCustomer);
     String deleteCustomer(Integer purchase_Id);
+    public PostResponse WarrantyAction(@RequestParam Integer purchase_id,@RequestParam Integer status);
 }

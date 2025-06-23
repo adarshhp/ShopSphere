@@ -10,4 +10,6 @@ import com.example.demo.response.PostResponse;
 public interface ICompanyMgtService {
 	public PostResponse postProduct(ProductDetails productDetails);
 	public List<ProductDetails> getProducts(@RequestParam Integer company_id);
+	public ProductDetails getProductDetailsByModelNo(@RequestParam String Model_no);
+	public List<ProductDetails> getProductsByModelNos(@RequestParam List<String> modelNos);
 }
