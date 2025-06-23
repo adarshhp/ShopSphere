@@ -13,6 +13,8 @@ import com.example.signup.model.response.LoginResponse;
 import com.example.signup.model.response.SignInResponse;
 import com.example.signup.repository.SignupRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserService implements IUserService {
 
@@ -26,6 +28,7 @@ public class UserService implements IUserService {
         this.jwtUtil = jwtUtil;
     }
 
+    @Transactional
     @Override
     public SignInResponse SignIn(UserDetails userDetails) {
         userDetails.setPassword(passwordEncoder.encode(userDetails.getPassword()));

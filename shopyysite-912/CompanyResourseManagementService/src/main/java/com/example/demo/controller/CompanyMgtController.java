@@ -37,4 +37,13 @@ public class CompanyMgtController {
 	public List<ProductDetails> getProducts(@RequestParam Integer company_id){
 		return service.getProducts(company_id);
 	}
+	@GetMapping("/getProductDetailsByModelNo")
+	public ProductDetails getProductDetailsByModelNo(@RequestParam String Model_no) {
+		return service.getProductDetailsByModelNo(Model_no);
+	}
+	
+	@GetMapping("/products/by-models")
+	public List<ProductDetails> getProductsByModelNos(@RequestParam List<String> modelNos) {
+	   return  service.getProductsByModelNos(modelNos);
+	}
 }

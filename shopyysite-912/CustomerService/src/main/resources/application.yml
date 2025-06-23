@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/CustomerCom
     username: postgres
-    password: postgres
+    password: Wow3password
 
   jpa:
     hibernate:
@@ -16,4 +16,4 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
-  port: 1090
+  port: 4089

@@ -25,6 +25,7 @@ public class SellerService implements ISellerService {
 		this.purchaseRepository=purchaseRepository;
 	}
 	
+	@Transactional
 	public PostResponse PostInventory(InventoryItem inventoryItem) {
 		InventoryItem item = sellerRepository.save(inventoryItem);
 		PostResponse resp=new PostResponse();
@@ -37,6 +38,7 @@ public class SellerService implements ISellerService {
 		}
 		return resp;
 	}
+	@Transactional
 	public PostResponse PostPurchase(PurchaseTable purchaseItem) {
 		PurchaseTable purchase=purchaseRepository.save(purchaseItem);
 		PostResponse resp=new PostResponse();
@@ -56,6 +58,7 @@ public class SellerService implements ISellerService {
 	public List<PurchaseTable> GetPurchases(@RequestParam Integer Seller_Id){
 		return purchaseRepository.GetPurchases(Seller_Id);
 	}
+	@Transactional
 	public PostResponse EditInventory(InventoryItem newItem, Integer purchaseId) {
 	    PostResponse resp = new PostResponse();
 
@@ -99,7 +102,7 @@ public class SellerService implements ISellerService {
 
 	    return response;
 	}
-	
+	@Transactional
 	public PostResponse EditPurchase(@RequestBody PurchaseTable purchaseItem, @RequestParam Integer sale_id) {
 	    PostResponse resp = new PostResponse();
 

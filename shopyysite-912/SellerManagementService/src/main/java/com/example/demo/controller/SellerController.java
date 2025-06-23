@@ -41,7 +41,6 @@ public class SellerController {
 	@GetMapping("/GetPurchases")
 	public List<PurchaseTable> GetPurchases(@RequestParam Integer Seller_Id){
 		return isellerservice.GetPurchases(Seller_Id);
-
 	}
 	
 	@GetMapping("/allinventory")
