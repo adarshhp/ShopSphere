@@ -21,6 +21,7 @@ public class InventoryItem {
 	private String Model_no;
 	@NotNull(message = "Company ID is required")
 	private Integer Company_id;
+	@NotNull(message="Category ID required")
 	private Integer Category_id;
 	private LocalDate purchase_date;
 	@NotNull(message = "Price is required")
