@@ -2,8 +2,31 @@ package com.example.demo.payload;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class RaiseWarrantyPayload {
+	@NotNull(message = "Customer ID is required")
 	private Integer customer_id;
+	@NotNull(message = "Request date is required")
+	private LocalDate request_date;
+	@NotBlank(message = "Customer name is required")
+	private String customer_name;
+	@NotBlank(message = "Customer email is required")
+    @Email(message = "Invalid email format")
+	private String customer_email;
+	@NotNull(message = "Phone number is required")
+    @Digits(integer = 10, fraction = 0, message = "Phone number must be a 10-digit number")
+	private Integer phone_number;
+	@NotBlank(message = "Model number is required")
+	private String model_no;
+	@NotNull(message = "Purchase date is required")
+	private LocalDate purchase_date;
+	private String image;
+	@NotNull(message = "Company ID is required")
+	private Integer company_id;
 	public Integer getCustomer_id() {
 		return customer_id;
 	}
@@ -52,14 +75,6 @@ public class RaiseWarrantyPayload {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	private LocalDate request_date;
-	private String customer_name;
-	private String customer_email;
-	private Integer phone_number;
-	private String model_no;
-	private LocalDate purchase_date;
-	private String image;
-	private Integer company_id;
 	public Integer getCompany_id() {
 		return company_id;
 	}

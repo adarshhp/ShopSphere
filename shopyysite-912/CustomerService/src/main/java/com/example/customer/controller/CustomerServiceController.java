@@ -1,9 +1,13 @@
 package com.example.customer.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +23,8 @@ import com.example.demo.payload.CustomerRegPayload;
 import com.example.demo.payload.PostResponse;
 import com.example.demo.payload.RaiseWarrantyPayload;
 
+import jakarta.validation.Valid;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/")
@@ -26,20 +32,43 @@ public class CustomerServiceController {
 	@Autowired
 	private ICustomerService service;
 	
-	@PostMapping("/register-warranty")
-	public PostResponse registercustomer(@RequestBody CustomerRegPayload customerRegPayload) {
-		return service.registercustomer(customerRegPayload);
-	}
+	 private ResponseEntity<?> handleValidationErrors(BindingResult bindingResult) {
+	        Map<String, String> errors = new HashMap<>();
+	        for (FieldError error : bindingResult.getFieldErrors()) {
+	            errors.put(error.getField(), error.getDefaultMessage());
+	        }
+	        return ResponseEntity.badRequest().body(errors);
+	    }
+
+	    @PostMapping("/register-warranty")
+	    public ResponseEntity<?> registercustomer(@Valid @RequestBody CustomerRegPayload customerRegPayload,
+	                                              BindingResult bindingResult) {
+	        if (bindingResult.hasErrors()) {
+	            return handleValidationErrors(bindingResult);
+	        }
+	        PostResponse response = service.registercustomer(customerRegPayload);
+	        return ResponseEntity.ok(response);
+	    }
+	    
+	    @PostMapping("/raise-warranty-request")
+	    public ResponseEntity<?> raiseWarrantyRequest(@Valid @RequestBody RaiseWarrantyPayload view,
+	                                                  BindingResult bindingResult) {
+	        if (bindingResult.hasErrors()) {
+	            return handleValidationErrors(bindingResult);
+	        }
+	        PostResponse response = service.raiseWarrantyRequest(view);
+	        return ResponseEntity.ok(response);
+	    }
 	
 	@GetMapping("/warranty-requests-customer")
 	public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId) {
 	    return service.getWarrantyRequests(customerId);
 	}
 	
-	@PostMapping("/raise-warranty-request")
-	public PostResponse raiseWarrantyRequest(@RequestBody RaiseWarrantyPayload view) {
-	    return service.raiseWarrantyRequest(view);
-	}
+//	@PostMapping("/raise-warranty-request")
+//	public PostResponse raiseWarrantyRequest(@Valid @RequestBody RaiseWarrantyPayload view) {
+//	    return service.raiseWarrantyRequest(view);
+//	}
 	@GetMapping("/raised-warranty-requests-customer")
 	public List<CompanyView> getRaisedWarrantyRequestsForCustomer(@RequestParam Integer userId){
 		return service.getRaisedWarrantyRequestsForCustomer(userId);
