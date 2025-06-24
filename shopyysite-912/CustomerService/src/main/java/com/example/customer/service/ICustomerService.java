@@ -21,6 +21,7 @@ public interface ICustomerService {
 	public PostResponse raiseWarrantyRequest(@RequestBody RaiseWarrantyPayload view);
 	    
     CustomerDetails updateCustomer(Integer purchase_Id, CustomerDetails updatedCustomer);
-    String deleteCustomer(Integer purchase_Id);
+    PostResponse deleteCustomer(Integer purchase_Id);
     public PostResponse WarrantyAction(@RequestParam Integer purchase_id,@RequestParam Integer status);
+    public PostResponse deleteRaisedWarranty(@RequestParam Integer raised_Id);
 }

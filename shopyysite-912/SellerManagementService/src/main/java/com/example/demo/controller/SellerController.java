@@ -16,7 +16,7 @@ import com.example.demo.model.PurchaseTable;
 import com.example.demo.response.PostResponse;
 import com.example.demo.service.ISellerService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/")
 public class SellerController {
@@ -52,7 +52,7 @@ public class SellerController {
 	public PostResponse editInventory(@RequestBody InventoryItem inventoryItem,@RequestParam Integer purchaseId) {
      return isellerservice.EditInventory(inventoryItem, purchaseId);
           }
-	@GetMapping("/deleteinventory")
+	@PostMapping("/deleteinventory")
 	public PostResponse DeleteInventory(@RequestParam Integer purchase_id) {
 		return isellerservice.DeleteInventory(purchase_id);
 	}

@@ -19,7 +19,7 @@ import com.example.demo.payload.CustomerRegPayload;
 import com.example.demo.payload.PostResponse;
 import com.example.demo.payload.RaiseWarrantyPayload;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/")
 public class CustomerServiceController {
@@ -57,8 +57,13 @@ public class CustomerServiceController {
 	}
 
 	 @PostMapping("/delete-registered-warranty")
-	    public String deleteCustomer(@RequestParam Integer purchase_Id) {
+	    public PostResponse deleteCustomer(@RequestParam Integer purchase_Id) {
 	        return service.deleteCustomer(purchase_Id);
+	 }
+	 
+	 @PostMapping("/delete-raised-warranty-requests")
+	 public PostResponse deleteRaisedWarranty(@RequestParam Integer raised_Id) {
+		 return service.deleteRaisedWarranty(raised_Id);
 	 }
 	 
 	 @GetMapping("/warranty-action")

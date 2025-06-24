@@ -25,6 +25,13 @@ public class CompanyView {
 	private String image;
 	private Integer warranty_status=1;
 	private Integer company_id;
+    private Integer isDeleted=0;
+	public Integer getIsDeleted() {
+		return isDeleted;
+	}
+	public void setIsDeleted(Integer isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 	public Integer getCompany_id() {
 		return company_id;
 	}

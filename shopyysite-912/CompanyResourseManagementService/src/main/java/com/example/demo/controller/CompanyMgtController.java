@@ -42,8 +42,8 @@ public class CompanyMgtController {
 		return service.getProductDetailsByModelNo(Model_no);
 	}
 	
-	@GetMapping("/products/by-models")
-	public List<ProductDetails> getProductsByModelNos(@RequestParam List<String> modelNos) {
+	@PostMapping("/products/by-models")
+	public List<ProductDetails> getProductsByModelNos(@RequestBody List<String> modelNos) {
 	   return  service.getProductsByModelNos(modelNos);
 	}
 }
