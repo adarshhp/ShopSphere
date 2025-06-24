@@ -122,17 +122,45 @@ public class CustomerService implements ICustomerService  {
         }
     }
 
+    @Transactional
     @Override
-    public String deleteCustomer(Integer purchase_Id) {
-        Optional<CustomerDetails> optional = repository.findById(purchase_Id);
-        if (optional.isPresent()) {
-            CustomerDetails customer = optional.get();
-            customer.setIsDeleted(purchase_Id);
-            repository.save(customer);
-            return "Customer marked as deleted with ID: " + purchase_Id;
-        } else {
-            return "Customer not found with ID: " + purchase_Id;
+    public PostResponse deleteCustomer(Integer purchase_Id) {
+//        Optional<CustomerDetails> optional = repository.findById(purchase_Id);
+//        if (optional.isPresent()) {
+//            CustomerDetails customer = optional.get();
+//            customer.setIsDeleted(purchase_Id);
+//            repository.save(customer);
+//            return "Customer marked as deleted with ID: " + purchase_Id;
+//        } else {
+//            return "Customer not found with ID: " + purchase_Id;
+//        }
+    	
+    	PostResponse k=new PostResponse();
+    Integer p =	repository.deleteCustomer(purchase_Id);
+    if(p>0) {
+    	k.setMessage("Deleted");
+    	k.setStatusCode(200);
+    }else {
+    k.setMessage("Cant Delete");
+	k.setStatusCode(200);
+    }
+    
+    return k;
+    }
+    
+    @Transactional
+    public PostResponse deleteRaisedWarranty(@RequestParam Integer raised_Id) {
+    	PostResponse k=new PostResponse();
+        Integer p =	companyviewrepository.deleteRaisedWarranty(raised_Id);
+        if(p>0) {
+        	k.setMessage("Deleted");
+        	k.setStatusCode(200);
+        }else {
+        k.setMessage("Cant Delete");
+    	k.setStatusCode(200);
         }
+        
+        return k;
     }
     
     @Transactional
