@@ -7,10 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="copmany_view_table")
@@ -18,40 +14,17 @@ public class CompanyView {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer warranty_request_id;
-    @NotNull(message = "Customer ID is required")
-    private Integer customer_id;
-
-    @NotNull(message = "Request date is required")
-    private LocalDate request_date;
-
-    @NotBlank(message = "Customer name is required")
-    private String customer_name;
-
-    @NotBlank(message = "Customer email is required")
-    @Email(message = "Invalid email format")
-    private String customer_email;
-
-    @NotNull(message = "Phone number is required")
-    @Min(value = 1000000000, message = "Phone number must be 10 digits")
-    private Integer phone_number;
-
-    @NotBlank(message = "Model number is required")
-    private String model_no;
-
-    @NotNull(message = "Purchase date is required")
-    private LocalDate purchase_date;
-
-    @NotNull(message = "Warranty period is required")
-    private LocalDate warranty_period;
-
-    @NotBlank(message = "Image is required")
-    private String image;
-
-    @NotNull
-    private Integer warranty_status = 1;
-
-    @NotNull(message = "Company ID is required")
-    private Integer company_id;
+	private Integer customer_id;
+	private LocalDate request_date;
+	private String customer_name;
+	private String customer_email;
+	private Integer phone_number;
+	private String model_no;
+	private LocalDate purchase_date;
+	private LocalDate warranty_period;
+	private String image;
+	private Integer warranty_status=1;
+	private Integer company_id;
     private Integer isDeleted=0;
 	public Integer getIsDeleted() {
 		return isDeleted;
@@ -59,40 +32,6 @@ public class CompanyView {
 	public void setIsDeleted(Integer isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-    @NotNull(message = "Customer ID is required")
-    private Integer customer_id;
-
-    @NotNull(message = "Request date is required")
-    private LocalDate request_date;
-
-    @NotBlank(message = "Customer name is required")
-    private String customer_name;
-
-    @NotBlank(message = "Customer email is required")
-    @Email(message = "Invalid email format")
-    private String customer_email;
-
-    @NotNull(message = "Phone number is required")
-    @Min(value = 1000000000, message = "Phone number must be 10 digits")
-    private Integer phone_number;
-
-    @NotBlank(message = "Model number is required")
-    private String model_no;
-
-    @NotNull(message = "Purchase date is required")
-    private LocalDate purchase_date;
-
-    @NotNull(message = "Warranty period is required")
-    private LocalDate warranty_period;
-
-    @NotBlank(message = "Image is required")
-    private String image;
-
-    @NotNull
-    private Integer warranty_status = 1;
-
-    @NotNull(message = "Company ID is required")
-    private Integer company_id;
 	public Integer getCompany_id() {
 		return company_id;
 	}
