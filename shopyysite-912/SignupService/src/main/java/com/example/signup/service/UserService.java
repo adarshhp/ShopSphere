@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.signup.dto.UserDTO;
 import com.example.signup.jwt.JwtUtil;
 import com.example.signup.model.UserDetails;
+import com.example.signup.model.payload.UserPayload;
 import com.example.signup.model.response.LoginResponse;
 import com.example.signup.model.response.SignInResponse;
 import com.example.signup.repository.SignupRepository;
@@ -30,11 +31,15 @@ public class UserService implements IUserService {
 
     @Transactional
     @Override
-    public SignInResponse SignIn(UserDetails userDetails) {
-        userDetails.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+    public SignInResponse SignIn(UserPayload userPaylod) {
+    	userPaylod.setPassword(passwordEncoder.encode(userPaylod.getPassword()));
         SignInResponse response = new SignInResponse();
-
-        UserDetails savedUser = userRepository.save(userDetails);
+        UserDetails ud=new UserDetails();
+        ud.setUserName(userPaylod.getUserName());
+        ud.setEmail(userPaylod.getEmail());
+        ud.setPassword(userPaylod.getPassword());
+        ud.setUserType(1);
+        UserDetails savedUser = userRepository.save(ud);
 
         if (savedUser != null && savedUser.getUserId() != null) {
             response.setMessage("Signup success");
@@ -74,6 +79,22 @@ public class UserService implements IUserService {
     @Override
 	public List<UserDetails>GetUsers(){
 		return userRepository.GetUsers();
+	}
+
+	@Override
+	public SignInResponse CreateUser(UserDetails userDetails) {
+		UserDetails savedUser= userRepository.save(userDetails);
+		SignInResponse response = new SignInResponse();
+		if (savedUser != null && savedUser.getUserId() != null) {
+            response.setMessage("Signup success");
+            response.setStatusCode(200);
+        } else {
+            response.setMessage("Signup failed");
+            response.setStatusCode(400);
+        }
+
+        return response;
+		
 	}
 
 

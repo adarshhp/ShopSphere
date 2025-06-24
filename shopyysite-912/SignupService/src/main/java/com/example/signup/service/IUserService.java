@@ -4,11 +4,15 @@ import java.util.List;
 
 import com.example.signup.dto.UserDTO;
 import com.example.signup.model.UserDetails;
+import com.example.signup.model.payload.UserPayload;
 import com.example.signup.model.response.LoginResponse;
 import com.example.signup.model.response.SignInResponse;
 
+import jakarta.validation.Valid;
+
 public interface IUserService {
-	public SignInResponse SignIn(UserDetails userdetails);
+	public SignInResponse CreateUser(UserDetails userDetails);
+	public SignInResponse SignIn(@Valid UserPayload userPayload);
 	public LoginResponse Login(UserDTO usedto);
 	public List<UserDetails>GetUsers();
 

@@ -1,14 +1,20 @@
 package com.example.signup.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.example.signup.dto.UserDTO;
 import com.example.signup.model.UserDetails;
@@ -17,6 +23,8 @@ import com.example.signup.model.response.LoginResponse;
 import com.example.signup.model.response.SignInResponse;
 import com.example.signup.service.IUserService;
 
+import jakarta.validation.Valid;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/")
@@ -24,24 +32,34 @@ public class SignupController {
 	@Autowired
 	private  IUserService service;
 	
+	private ResponseEntity<?> handleValidationErrors(BindingResult bindingResult) {
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError error : bindingResult.getFieldErrors()) {
+            errors.put(error.getField(), error.getDefaultMessage());
+        }
+        return ResponseEntity.badRequest().body(errors);
+    }
 
 	@PostMapping("/signup")
-	public SignInResponse signUp(@RequestBody UserPayload userPayload) {
-	    UserDetails user = new UserDetails();
-	    user.setUserName(userPayload.getUserName());
-	    user.setEmail(userPayload.getEmail());
-	    user.setPassword(userPayload.getPassword());
+	public ResponseEntity<?> signUp(@Valid @RequestBody UserPayload userPayload, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+	            return handleValidationErrors(bindingResult);
+		}
+		
+		 SignInResponse response = service.SignIn(userPayload);
+	        return ResponseEntity.ok(response);
 	    
-	    // Set a default or derived value for userType
-	    user.setUserType(1); // default type
-
-	    return service.SignIn(user);
 	}
 
 	
 	@PostMapping("/login")
-	public LoginResponse Login(@RequestBody UserDTO usedto) {
-		return service.Login(usedto);
+	public ResponseEntity<?> Login(@Valid @RequestBody UserDTO usedto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+            return handleValidationErrors(bindingResult);
+	}
+	
+	 LoginResponse response = service.Login(usedto);
+        return ResponseEntity.ok(response);
 	}
 	
 	@GetMapping("/getusers")
@@ -50,16 +68,13 @@ public class SignupController {
 	}
 	
 	@PostMapping("/createuser")
-	public SignInResponse SignIn(@RequestBody UserDetails userdetails) {
+	public ResponseEntity<?> signUp1(@Valid @RequestBody UserDetails userDetails, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+	            return handleValidationErrors(bindingResult);
+		}
 		
-		 UserDetails user = new UserDetails();
-		    user.setUserName(userdetails.getUserName());
-		    user.setEmail(userdetails.getEmail());
-		    user.setPassword(userdetails.getPassword());
-		    
-		    // Set a default or derived value for userType
-		    user.setUserType(userdetails.getUserType()); // default type
-
-		return service.SignIn(user);
+		 SignInResponse response = service.CreateUser(userDetails);
+	        return ResponseEntity.ok(response);
+	    
 	}
 }

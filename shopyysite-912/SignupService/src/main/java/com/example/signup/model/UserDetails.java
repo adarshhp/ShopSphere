@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="user_table")
@@ -13,9 +15,18 @@ public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+    
+    @NotBlank(message="Username required")
     private String userName;
+    
+    @NotBlank(message="Email required")
+    @Email(message="Provid a proper email id")
     private String email;
+    
+    @NotBlank(message="Password required")
     private String password;
+    
+    @NotBlank(message="User type required")
     private Integer userType;
 
     // Getters and setters
