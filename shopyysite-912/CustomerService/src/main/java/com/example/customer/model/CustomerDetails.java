@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="warranty_register_table")
@@ -14,10 +16,17 @@ public class CustomerDetails {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer purchase_Id;
-	private Integer customerId;
-	private String model_no;
-	private LocalDate purchase_date;
-    private Integer isDeleted=0;
+	 @NotNull(message = "Customer ID is required")
+	    private Integer customerId;
+
+	    @NotBlank(message = "Model number is required")
+	    private String model_no;
+
+	    @NotNull(message = "Purchase date is required")
+	    private LocalDate purchase_date;
+
+	    @NotNull
+	    private Integer isDeleted = 0;
 	
 	public Integer getIsDeleted() {
 		return isDeleted;
