@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,12 +54,17 @@ public class SellerService implements ISellerService {
 		return resp;
 	}
 	
-	public List<InventoryItem> GetAllInventory(@RequestParam Integer Seller_Id){
-		return sellerRepository.GetAllInventory(Seller_Id);
+	@Override
+	public List<InventoryItem> GetAllInventory(Integer sellerId, Integer categoryId, String modelNo, Integer warranty, LocalDate purchaseDate) {
+	    return sellerRepository.findByFilters(sellerId, categoryId, modelNo, warranty, purchaseDate);
 	}
-	public List<PurchaseTable> GetPurchases(@RequestParam Integer Seller_Id){
-		return purchaseRepository.GetPurchases(Seller_Id);
+
+	
+	@Override
+	public List<PurchaseTable> GetPurchases(Integer sellerId, String modelNo) {
+	    return purchaseRepository.findFilteredPurchases(sellerId,modelNo);
 	}
+
 	@Transactional
 	public PostResponse EditInventory(InventoryItem newItem, Integer purchaseId) {
 	    PostResponse resp = new PostResponse();
@@ -112,7 +119,7 @@ public class SellerService implements ISellerService {
 	        PurchaseTable existing = existingOpt.get();
 
 	        // Update all fields
-	        existing.setCustomer_id(purchaseItem.getCustomer_id());
+//	        existing.setCustomer_id(purchaseItem.getCustomer_id());
 	        existing.setModelNo(purchaseItem.getModelNo());
 	        existing.setPrice(purchaseItem.getPrice());
 	        existing.setPurchase_date(purchaseItem.getPurchase_date());
@@ -149,7 +156,5 @@ public class SellerService implements ISellerService {
 		    return response;
 		
 	}
-
-
 
 }

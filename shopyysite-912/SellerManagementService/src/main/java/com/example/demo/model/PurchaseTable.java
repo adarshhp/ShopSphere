@@ -7,10 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "purchase_table")
@@ -18,23 +14,13 @@ public class PurchaseTable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer sale_id;
-@NotNull(message = "Customer ID is required")
-private Integer customer_id;
-@NotBlank(message = "Model number is required")
 private String modelNo;
-@NotNull(message = "Price is required")
 private Integer Price;
 private LocalDate purchase_date;
-@NotNull(message = "Warranty is required")
-@Min(value = 1, message = "Warranty must be at least 1")
 private Integer Warranty;
 private String Name;
-@Email(message = "Email format is invalid")
 private String Email;
-@NotNull(message = "Phone number is required")
-@Min(value = 1000000000, message = "Phone number must be 10 digits")
 private Integer Phono;
-@NotNull(message = "Seller ID is required")
 private Integer seller_id;
 private Integer is_deleted=0;
 public Integer getIs_deleted() {
@@ -55,13 +41,6 @@ public Integer getSale_id() {
 public void setSale_id(Integer sale_id) {
 	this.sale_id = sale_id;
 }
-public Integer getCustomer_id() {
-	return customer_id;
-}
-public void setCustomer_id(Integer customer_id) {
-	this.customer_id = customer_id;
-}
-
 
 public String getModelNo() {
 	return modelNo;

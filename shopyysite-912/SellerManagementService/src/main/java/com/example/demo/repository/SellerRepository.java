@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,11 +15,23 @@ import com.example.demo.response.PostResponse;
 
 @Repository
 public interface SellerRepository extends JpaRepository<InventoryItem, Integer>  {
-
-	@Query("Select u from InventoryItem u where u.seller_id = :Seller_Id AND u.is_deleted=0")
-	public List<InventoryItem> GetAllInventory(@Param("Seller_Id") Integer Seller_Id);
 	
 	@Modifying
 	@Query("Update InventoryItem u set u.is_deleted=1 where u.purchase_id=:purchase_id")
 	int DeleteInventory(@Param("purchase_id") Integer purchase_id);
+	
+	@Query("SELECT i FROM InventoryItem i " +
+		       "WHERE i.seller_id = :sellerId AND i.is_deleted = 0 " +
+		       "AND (:categoryId IS NULL OR i.Category_id = :categoryId) " +
+		       "AND (:modelNo IS NULL OR i.Model_no = :modelNo) " +
+		       "AND (:warranty IS NULL OR i.warranty = :warranty) " +
+		       "AND (:purchaseDate IS NULL OR i.purchase_date = :purchaseDate)")
+		List<InventoryItem> findByFilters(
+		    @Param("sellerId") Integer sellerId,
+		    @Param("categoryId") Integer categoryId,
+		    @Param("modelNo") String modelNo,
+		    @Param("warranty") Integer warranty,
+		    @Param("purchaseDate") LocalDate purchaseDate
+		);
+
 }
