@@ -7,6 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "purchase_table")
@@ -14,11 +17,14 @@ public class PurchaseTable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer sale_id;
+@NotBlank(message = "Model number is required")
 private String modelNo;
 private Integer Price;
 private LocalDate purchase_date;
 private Integer Warranty;
 private String Name;
+@NotBlank(message="Email required")
+@Email(message="Provid a proper email id")
 private String Email;
 private Integer Phono;
 private Integer seller_id;
