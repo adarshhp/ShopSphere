@@ -61,13 +61,17 @@ public class CustomerService implements ICustomerService  {
 
 
 	@Override
-	 public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id) {
-	    return companyviewrepository.findAll();
+	public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id, Integer status, String modelNo, LocalDate purchaseDate, 
+														LocalDate warrantyPeriod, Integer customerId, LocalDate requestDateStart, LocalDate requestDateEnd ) {
+	   
+	    return companyviewrepository.findFilteredCompanyViews(status,modelNo,purchaseDate,warrantyPeriod,customerId,requestDateStart,requestDateEnd);
 	}
+
 	
 	@Override
-	public List<CompanyView> getRaisedWarrantyRequestsForCustomer(@RequestParam Integer userId){
-		return companyviewrepository.getRaisedWarrantyRequestsForCustomer(userId);
+	public List<CompanyView> getRaisedWarrantyRequestsForCustomer(@RequestParam Integer userId,@RequestParam(required = false) Integer status,@RequestParam(required = false) String modelNo ){
+
+		return companyviewrepository.findRaisedWarrantyRequestsForCustomerFiltered(userId, status, modelNo);
 	}
 	
 	@Override
@@ -104,8 +108,9 @@ public class CustomerService implements ICustomerService  {
 	return Pr;    }
 
     @Override
-    public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId) {
-        return repository.getWarrantyRequests(customerId);
+    public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId, @RequestParam(required = false) String modelNo, @RequestParam(required = false) LocalDate purchaseDateStart, 
+            										@RequestParam(required = false) LocalDate purchaseDateEnd ) {
+    	return repository.findFilteredCustomerDetails(modelNo, customerId, purchaseDateStart, purchaseDateEnd);
     }
     
     @Override

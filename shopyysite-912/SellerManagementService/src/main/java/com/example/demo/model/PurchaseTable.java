@@ -18,11 +18,13 @@ public class PurchaseTable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer sale_id;
+@NotBlank(message = "Model number is required")
 private String modelNo;
 @NotNull(message = "Price is required")
 private Integer Price;
 private LocalDate purchase_date;
 @NotNull(message = "Warranty is required")
+@Min(value = 1, message = "Warranty must be at least 1")
 private Integer Warranty;
 private String Name;
 @Email(message = "Email format is invalid")

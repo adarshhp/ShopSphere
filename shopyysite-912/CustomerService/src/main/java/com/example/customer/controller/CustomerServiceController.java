@@ -1,9 +1,14 @@
 package com.example.customer.controller;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +24,8 @@ import com.example.demo.payload.CustomerRegPayload;
 import com.example.demo.payload.PostResponse;
 import com.example.demo.payload.RaiseWarrantyPayload;
 
+import jakarta.validation.Valid;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/")
@@ -26,34 +33,66 @@ public class CustomerServiceController {
 	@Autowired
 	private ICustomerService service;
 	
+	private ResponseEntity<?> handleValidationErrors(BindingResult bindingResult) {
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError error : bindingResult.getFieldErrors()) {
+            errors.put(error.getField(), error.getDefaultMessage());
+        }
+        return ResponseEntity.badRequest().body(errors);
+    }
+	
 	@PostMapping("/register-warranty")
-	public PostResponse registercustomer(@RequestBody CustomerRegPayload customerRegPayload) {
-		return service.registercustomer(customerRegPayload);
+	public ResponseEntity<?> registercustomer(@Valid @RequestBody CustomerRegPayload customerRegPayload,BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+            return handleValidationErrors(bindingResult);
+        }
+		PostResponse response= service.registercustomer(customerRegPayload);
+		return ResponseEntity.ok(response);
 	}
 	
+	
+	
 	@GetMapping("/warranty-requests-customer")
-	public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId) {
-	    return service.getWarrantyRequests(customerId);
+	public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId,@RequestParam String modelNo, @RequestParam LocalDate purchaseDateStart, @RequestParam LocalDate purchaseDateEnd) {
+	    return service.getWarrantyRequests( customerId,modelNo, purchaseDateStart, purchaseDateEnd);
 	}
 	
 	@PostMapping("/raise-warranty-request")
-	public PostResponse raiseWarrantyRequest(@RequestBody RaiseWarrantyPayload view) {
-	    return service.raiseWarrantyRequest(view);
+	public ResponseEntity<?> raiseWarrantyRequest(@Valid @RequestBody RaiseWarrantyPayload view, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+            return handleValidationErrors(bindingResult);
+        }
+		PostResponse response= service.raiseWarrantyRequest(view);
+		return ResponseEntity.ok(response);
 	}
 	@GetMapping("/raised-warranty-requests-customer")
-	public List<CompanyView> getRaisedWarrantyRequestsForCustomer(@RequestParam Integer userId){
-		return service.getRaisedWarrantyRequestsForCustomer(userId);
+	public List<CompanyView> getRaisedWarrantyRequestsForCustomer(@RequestParam Integer userId,@RequestParam Integer status,@RequestParam String modelNo){
+		return service.getRaisedWarrantyRequestsForCustomer(userId, status, modelNo);
 	}
 	
 	@GetMapping("/getraised-warranty-requests")
-    public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id) {
-        return service.getWarrayRequestsByCustomers(company_id);
+    public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id, Integer status, String modelNo, LocalDate purchaseDate, LocalDate warrantyPeriod, Integer customerId, LocalDate requestDateStart, LocalDate requestDateEnd ) {
+        return service.getWarrayRequestsByCustomers(company_id, customerId, modelNo, requestDateEnd, requestDateEnd, customerId, requestDateEnd, requestDateEnd);
     }
 	
 	
 	 @PostMapping("/editregistered-warranty")
-	    public CustomerDetails editCustomer(@RequestParam Integer purchase_Id, @RequestBody CustomerDetails updatedCustomer) {
-	        return service.updateCustomer(purchase_Id, updatedCustomer);
+	    public ResponseEntity<?> editCustomer(@RequestParam Integer purchase_Id,@Valid @RequestBody CustomerDetails updatedCustomer, BindingResult bindingResult) {
+		 if (bindingResult.hasErrors()) {
+	            return handleValidationErrors(bindingResult);
+	        }
+		 CustomerDetails cd= service.updateCustomer(purchase_Id, updatedCustomer);
+		 PostResponse response= new PostResponse();
+
+		 if(cd.getCustomerId()!=null) {
+			 response.setStatusCode(200);
+			 response.setMessage("Warranty registration updated");
+		 }
+		 else {
+			 response.setStatusCode(400);
+			 response.setMessage("Warranty registration can't be updated");
+		 }
+		 return ResponseEntity.ok(response);
 	}
 
 	 @PostMapping("/delete-registered-warranty")

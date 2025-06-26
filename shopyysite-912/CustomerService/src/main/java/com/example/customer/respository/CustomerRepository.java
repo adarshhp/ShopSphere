@@ -1,13 +1,12 @@
 package com.example.customer.respository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.example.customer.model.CompanyView;
 import com.example.customer.model.CustomerDetails;
 
@@ -26,5 +25,15 @@ public interface CustomerRepository extends JpaRepository<CustomerDetails, Integ
     @Modifying
     @Query("UPDATE CustomerDetails c set c.isDeleted=1 where c.purchase_Id=:purchase_Id")
     Integer deleteCustomer(Integer purchase_Id);
+    
+    @Query("SELECT c FROM CustomerDetails c WHERE c.isDeleted = 0 AND " +
+    		"(:modelNo IS NULL OR c.model_no LIKE %:modelNo%) AND " + "(:customerId IS NULL OR c.customerId = :customerId) AND " + 
+    		"(:purchaseDateStart IS NULL OR c.purchase_date >= :purchaseDateStart) AND " + "(:purchaseDateEnd IS NULL OR c.purchase_date <= :purchaseDateEnd)")
+     List<CustomerDetails> findFilteredCustomerDetails(
+         @Param("modelNo") String modelNo,
+         @Param("customerId") Integer customerId, 
+         @Param("purchaseDateStart") LocalDate purchaseDateStart,
+         @Param("purchaseDateEnd") LocalDate purchaseDateEnd
+     );
 
 }
