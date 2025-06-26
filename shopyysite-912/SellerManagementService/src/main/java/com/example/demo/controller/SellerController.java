@@ -37,10 +37,19 @@ public class SellerController {
 	}
 	
 	@PostMapping("/purchase")
-	public ResponseEntity<?> PostPurchase(@RequestBody PurchaseTable purchaseItem) {
+	public ResponseEntity<?> postPurchase(@Valid @RequestBody PurchaseTable purchaseItem, BindingResult bindingResult) {
+ 
+	    if (bindingResult.hasErrors()) {
+	        List<String> errors = bindingResult.getFieldErrors().stream()
+	            .map(err -> err.getField() + ": " + err.getDefaultMessage())
+	            .toList();
+	        return ResponseEntity.badRequest().body(errors);
+	    }
+ 
 	    PostResponse response = isellerservice.PostPurchase(purchaseItem);
 	    return ResponseEntity.ok(response);
 	}
+ 
 
 	@PostMapping("/inventory")
 	public ResponseEntity<?> PostInventory(@Valid @RequestBody InventoryItem inventoryItem, BindingResult bindingResult) {

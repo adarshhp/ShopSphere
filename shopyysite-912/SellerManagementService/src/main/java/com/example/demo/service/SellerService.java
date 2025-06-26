@@ -40,19 +40,27 @@ public class SellerService implements ISellerService {
 		}
 		return resp;
 	}
-	@Transactional
-	public PostResponse PostPurchase(PurchaseTable purchaseItem) {
-		PurchaseTable purchase=purchaseRepository.save(purchaseItem);
-		PostResponse resp=new PostResponse();
-		if(purchase!=null&& purchase.getSale_id()!=null) {
-			resp.setStatusCode(200);
-			resp.setMessage("Successfully Posted");
-		}else {
-			resp.setStatusCode(400);
-			resp.setMessage("Couldnt save");
-		}
-		return resp;
-	}
+	
+	@Override
+    public PostResponse PostPurchase(PurchaseTable purchaseItem) {
+        PostResponse response = new PostResponse();
+
+        try {
+            PurchaseTable saved = purchaseRepository.save(purchaseItem);
+            if (saved != null && saved.getSale_id() != null) {
+                response.setStatusCode(200);
+                response.setMessage("Purchase saved successfully");
+            } else {
+                response.setStatusCode(400);
+                response.setMessage("Failed to save purchase");
+            }
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error: " + e.getMessage());
+        }
+
+        return response;
+    }
 	
 	@Override
 	public List<InventoryItem> GetAllInventory(Integer sellerId, Integer categoryId, String modelNo, Integer warranty, LocalDate purchaseDate) {
