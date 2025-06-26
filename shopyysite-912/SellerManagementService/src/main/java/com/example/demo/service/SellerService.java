@@ -112,7 +112,7 @@ public class SellerService implements ISellerService {
 	        PurchaseTable existing = existingOpt.get();
 
 	        // Update all fields
-	        existing.setCustomer_id(purchaseItem.getCustomer_id());
+//	        existing.setCustomer_id(purchaseItem.getCustomer_id());
 	        existing.setModelNo(purchaseItem.getModelNo());
 	        existing.setPrice(purchaseItem.getPrice());
 	        existing.setPurchase_date(purchaseItem.getPurchase_date());
@@ -149,7 +149,17 @@ public class SellerService implements ISellerService {
 		    return response;
 		
 	}
-
+	
+	 @Override
+	    public Boolean WarrrantyReqValid(@RequestParam String ModelNo,@RequestParam String PhoneNo) {
+		int exists = purchaseRepository.WarrrantyReqValid(ModelNo,PhoneNo);
+		if(exists>0) {
+			return true;
+		}else {
+			return false;
+		}
+	    }
+	
 
 
 }

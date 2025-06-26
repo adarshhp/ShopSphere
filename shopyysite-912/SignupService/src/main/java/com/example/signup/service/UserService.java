@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.signup.dto.UserDTO;
 import com.example.signup.jwt.JwtUtil;
@@ -96,6 +97,9 @@ public class UserService implements IUserService {
         return response;
 		
 	}
-
-
+	
+	@Override
+	public UserDetails GetUserDetails(Integer user_Id) {
+		return userRepository.GetUserDetails(user_Id);
+	}
 }

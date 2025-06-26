@@ -18,5 +18,7 @@ public interface PurchaseRepository extends JpaRepository<PurchaseTable,Integer>
 	@Modifying
 	@Query("Update PurchaseTable p set p.is_deleted=1 where p.sale_id=:sale_id")
 	int DeletePurchase(@Param("sale_id") Integer sale_id);
-
+	
+	@Query("SELECT COUNT(u) FROM PurchaseTable u WHERE u.modelNo = :ModelNo AND u.Phono = :PhoneNo")
+	int WarrrantyReqValid(@Param("ModelNo") String ModelNo, @Param("PhoneNo") String PhoneNo);
 }

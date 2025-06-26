@@ -18,7 +18,7 @@ public class CompanyView {
 	private LocalDate request_date;
 	private String customer_name;
 	private String customer_email;
-	private Integer phone_number;
+	private String phone_number;
 	private String model_no;
 	private LocalDate purchase_date;
 	private LocalDate warranty_period;
@@ -68,10 +68,10 @@ public class CompanyView {
 	public void setCustomer_email(String customer_email) {
 		this.customer_email = customer_email;
 	}
-	public Integer getPhone_number() {
+	public String getPhone_number() {
 		return phone_number;
 	}
-	public void setPhone_number(Integer phone_number) {
+	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
 	}
 	public String getModel_no() {
