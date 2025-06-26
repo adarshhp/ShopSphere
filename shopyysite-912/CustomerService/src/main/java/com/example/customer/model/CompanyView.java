@@ -7,6 +7,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="copmany_view_table")
@@ -14,18 +18,40 @@ public class CompanyView {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer warranty_request_id;
+	
+	@NotBlank(message = "Customer ID required")
 	private Integer customer_id;
+	@NotBlank(message = "Request date required")
 	private LocalDate request_date;
+	@NotBlank(message = "Customer name required")
 	private String customer_name;
+	@Email
+	@NotBlank(message = "Customer email ID required")
 	private String customer_email;
+	@NotBlank(message = "Customer phone number required")
 	private Integer phone_number;
+	@NotBlank(message = "Model number is required")
+	@Size(min = 2, max = 50, message = "Model number must be between 2 and 50 characters")
 	private String model_no;
+	@NotBlank(message = "Purchase date required")
 	private LocalDate purchase_date;
+	@NotBlank(message = "Warranty period required")
 	private LocalDate warranty_period;
+	@NotBlank(message = "Product image required")
 	private String image;
 	private Integer warranty_status=1;
+	@NotNull(message = "Company ID is required")
 	private Integer company_id;
     private Integer isDeleted=0;
+    @NotBlank(message = "Reason required")
+    private String reason;
+
+    public String getReason() {
+    	return reason;
+    }
+    public void setReason(String reason) {
+    	this.reason = reason;
+    }
 	public Integer getIsDeleted() {
 		return isDeleted;
 	}

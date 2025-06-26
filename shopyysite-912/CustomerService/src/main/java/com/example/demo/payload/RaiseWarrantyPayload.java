@@ -27,6 +27,15 @@ public class RaiseWarrantyPayload {
 	private String image;
 	@NotNull(message = "Company ID is required")
 	private Integer company_id;
+	@NotBlank(message = "Reason required")
+    private String reason;
+
+    public String getReason() {
+    	return reason;
+    }
+    public void setReason(String reason) {
+    	this.reason = reason;
+    }
 	public Integer getCustomer_id() {
 		return customer_id;
 	}

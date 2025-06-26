@@ -27,7 +27,8 @@ public class CustomerDetails {
 
 	    @NotNull
 	    private Integer isDeleted = 0;
-	
+	    
+	   
 	public Integer getIsDeleted() {
 		return isDeleted;
 	}

@@ -1,8 +1,10 @@
 package com.example.customer.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.customer.model.CompanyView;
@@ -13,10 +15,14 @@ import com.example.demo.payload.RaiseWarrantyPayload;
 
 public interface ICustomerService {
 	public PostResponse registercustomer(@RequestBody CustomerRegPayload customerRegPayload);
-	public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId);   
+
+	public List<CustomerDetails> getWarrantyRequests(Integer customerId, String modelNo, LocalDate purchaseDateStart,
+			LocalDate purchaseDateEnd);   
 	
-	 public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id);
-	 public List<CompanyView> getRaisedWarrantyRequestsForCustomer(@RequestParam Integer userId);
+	 public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id, Integer status, String modelNo,
+				LocalDate purchaseDate, LocalDate warrantyPeriod, Integer customerId, LocalDate requestDateStart,
+				LocalDate requestDateEnd);
+	 public List<CompanyView> getRaisedWarrantyRequestsForCustomer(Integer userId, Integer status, String modelNo);
 	 
 	public PostResponse raiseWarrantyRequest(@RequestBody RaiseWarrantyPayload view);
 	    
@@ -24,4 +30,5 @@ public interface ICustomerService {
     PostResponse deleteCustomer(Integer purchase_Id);
     public PostResponse WarrantyAction(@RequestParam Integer purchase_id,@RequestParam Integer status);
     public PostResponse deleteRaisedWarranty(@RequestParam Integer raised_Id);
+	
 }
