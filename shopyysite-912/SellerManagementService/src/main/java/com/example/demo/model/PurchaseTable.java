@@ -11,6 +11,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "purchase_table")
@@ -28,6 +31,8 @@ private LocalDate purchase_date;
 private Integer Warranty;
 private String Name;
 @Email(message = "Email format is invalid")
+@NotBlank(message="Email required")
+@Email(message="Provid a proper email id")
 private String Email;
 private String Phono;
 private Integer seller_id;
@@ -50,7 +55,6 @@ public Integer getSale_id() {
 public void setSale_id(Integer sale_id) {
 	this.sale_id = sale_id;
 }
-
 
 public String getModelNo() {
 	return modelNo;
