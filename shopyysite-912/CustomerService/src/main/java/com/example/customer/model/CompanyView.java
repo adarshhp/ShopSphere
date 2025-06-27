@@ -28,10 +28,7 @@ public class CompanyView {
 	@Email
 	@NotBlank(message = "Customer email ID required")
 	private String customer_email;
-	@NotBlank(message = "Customer phone number required")
-	private Integer phone_number;
-	@NotBlank(message = "Model number is required")
-	@Size(min = 2, max = 50, message = "Model number must be between 2 and 50 characters")
+	private String phone_number;
 	private String model_no;
 	@NotBlank(message = "Purchase date required")
 	private LocalDate purchase_date;
@@ -94,10 +91,10 @@ public class CompanyView {
 	public void setCustomer_email(String customer_email) {
 		this.customer_email = customer_email;
 	}
-	public Integer getPhone_number() {
+	public String getPhone_number() {
 		return phone_number;
 	}
-	public void setPhone_number(Integer phone_number) {
+	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
 	}
 	public String getModel_no() {

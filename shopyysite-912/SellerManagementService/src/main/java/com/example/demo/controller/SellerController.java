@@ -36,6 +36,7 @@ public class SellerController {
 		this.isellerservice=isellerservice;
 	}
 	
+
 	@PostMapping("/purchase")
 	public ResponseEntity<?> postPurchase(@Valid @RequestBody PurchaseTable purchaseItem, BindingResult bindingResult) {
  
@@ -49,7 +50,6 @@ public class SellerController {
 	    PostResponse response = isellerservice.PostPurchase(purchaseItem);
 	    return ResponseEntity.ok(response);
 	}
- 
 
 	@PostMapping("/inventory")
 	public ResponseEntity<?> PostInventory(@Valid @RequestBody InventoryItem inventoryItem, BindingResult bindingResult) {
@@ -104,6 +104,11 @@ public class SellerController {
 	public PostResponse DeletePurchase(@RequestParam Integer sale_id) {
 		return isellerservice.DeletePurchase(sale_id);
 	}
+	
+	 @GetMapping("/warranty-reg-valid")
+	 public Boolean WarrrantyReqValid(@RequestParam String ModelNo,@RequestParam String PhoneNo) {
+		 return isellerservice.WarrrantyReqValid(ModelNo,PhoneNo);
+	 }
 	
 
 }

@@ -17,9 +17,8 @@ public class RaiseWarrantyPayload {
 	@NotBlank(message = "Customer email is required")
     @Email(message = "Invalid email format")
 	private String customer_email;
-	@NotNull(message = "Phone number is required")
-    @Digits(integer = 10, fraction = 0, message = "Phone number must be a 10-digit number")
-	private Integer phone_number;
+	
+	private String phone_number;
 	@NotBlank(message = "Model number is required")
 	private String model_no;
 	@NotNull(message = "Purchase date is required")
@@ -60,10 +59,10 @@ public class RaiseWarrantyPayload {
 	public void setCustomer_email(String customer_email) {
 		this.customer_email = customer_email;
 	}
-	public Integer getPhone_number() {
+	public String getPhone_number() {
 		return phone_number;
 	}
-	public void setPhone_number(Integer phone_number) {
+	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
 	}
 	public String getModel_no() {

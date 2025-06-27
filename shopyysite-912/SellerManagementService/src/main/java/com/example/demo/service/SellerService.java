@@ -164,5 +164,15 @@ public class SellerService implements ISellerService {
 		    return response;
 		
 	}
-
+	
+	 @Override
+	    public Boolean WarrrantyReqValid(@RequestParam String ModelNo,@RequestParam String PhoneNo) {
+		int exists = purchaseRepository.WarrrantyReqValid(ModelNo,PhoneNo);
+		if(exists>0) {
+			return true;
+		}else {
+			return false;
+		}
+	    }
+	
 }

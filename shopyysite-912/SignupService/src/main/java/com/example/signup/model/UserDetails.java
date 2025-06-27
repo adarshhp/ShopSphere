@@ -14,7 +14,7 @@ public class UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Integer user_id;
     
     @NotBlank(message="Username required")
     private String userName;
@@ -26,15 +26,14 @@ public class UserDetails {
     @NotBlank(message="Password required")
     private String password;
     
-    @NotBlank(message="User type required")
     private Integer userType;
 
     // Getters and setters
     public Integer getUserId() {
-        return userId;
+        return user_id;
     }
     public void setUserId(Integer userId) {
-        this.userId = userId;
+        this.user_id = userId;
     }
     public String getUserName() {
         return userName;

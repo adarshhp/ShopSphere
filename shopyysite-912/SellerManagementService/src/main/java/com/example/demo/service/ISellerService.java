@@ -25,5 +25,5 @@ public interface ISellerService {
 	public PostResponse DeleteInventory(@RequestParam Integer purchase_id);
 	public PostResponse EditPurchase(@RequestBody PurchaseTable purchaseItem, @RequestParam Integer sale_id);
 	public PostResponse DeletePurchase(@RequestParam Integer sale_id);
-
+	public Boolean WarrrantyReqValid(@RequestParam String ModelNo,@RequestParam String PhoneNo);
 	}

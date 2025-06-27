@@ -50,9 +50,17 @@
 	
 			@NotNull(message = "Company ID is required")
 			private Integer Company_id; 
+			
+			private Integer HolderStatus=1;
 	
 		    public Integer getProd_id() {
 				return prod_id;
+			}
+			public Integer getHolderStatus() {
+				return HolderStatus;
+			}
+			public void setHolderStatus(Integer holderStatus) {
+				HolderStatus = holderStatus;
 			}
 			public void setProd_id(Integer prod_id) {
 				this.prod_id = prod_id;
