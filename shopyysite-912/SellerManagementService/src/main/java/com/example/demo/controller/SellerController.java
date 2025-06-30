@@ -69,21 +69,28 @@ public class SellerController {
 	@GetMapping("/GetPurchases")
 	public List<PurchaseTable> GetPurchases(@RequestParam(required = false) Integer Seller_Id, 
 	                                        @RequestParam(required = false) String modelNo) {
-	    return isellerservice.GetPurchases(Seller_Id,modelNo);
+	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? null : modelNo.trim();
+
+	    return isellerservice.GetPurchases(Seller_Id,modelNoSanitized);
 	}
 
 	
 	@GetMapping("/allinventory")
 	public List<InventoryItem> GetAllInventory(
 	        @RequestParam Integer Seller_Id,
-	        @RequestParam(required = false) Integer categoryId,
+	        @RequestParam(required = false) String categoryId,
 	        @RequestParam(required = false) String modelNo,
-	        @RequestParam(required = false) Integer warranty,
-	        @RequestParam(required = false)
-	        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchaseDate) {
+	        @RequestParam(required = false) String warranty,
+	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchaseDate) {
 
-	    return isellerservice.GetAllInventory(Seller_Id, categoryId, modelNo, warranty, purchaseDate);
+	    // Convert empty strings to null and parse to Integer
+	    Integer categoryIdInt = (categoryId == null || categoryId.trim().isEmpty()) ? null : Integer.valueOf(categoryId);
+	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? null : modelNo.trim();
+	    Integer warrantyInt = (warranty == null || warranty.trim().isEmpty()) ? null : Integer.valueOf(warranty);
+
+	    return isellerservice.GetAllInventory(Seller_Id, categoryIdInt, modelNoSanitized, warrantyInt, purchaseDate);
 	}
+
 
 	
 	@PostMapping("/editinventory")

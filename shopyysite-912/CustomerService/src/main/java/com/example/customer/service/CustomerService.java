@@ -95,7 +95,8 @@ public class CustomerService implements ICustomerService  {
 		cv.setModel_no(view.getModel_no());
 		cv.setImage(view.getImage());
 		cv.setRequest_date(view.getRequest_date());
-		cv.setCompany_id(view.getCustomer_id());
+		cv.setCompany_id(view.getCompany_id());
+		cv.setReason(view.getReason());
 		
 		CompanyView f=companyviewrepository.save(cv);
 		if(f.getCustomer_id()!=null) {
@@ -105,12 +106,12 @@ public class CustomerService implements ICustomerService  {
 			Pr.setMessage("Couldnt update");
 			Pr.setStatusCode(404);
 		}
-	return Pr;    }
+	return Pr;   
+	}
 
     @Override
-    public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId, @RequestParam(required = false) String modelNo, @RequestParam(required = false) LocalDate purchaseDateStart, 
-            										@RequestParam(required = false) LocalDate purchaseDateEnd ) {
-    	return repository.findFilteredCustomerDetails(modelNo, customerId, purchaseDateStart, purchaseDateEnd);
+    public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId, @RequestParam(required = false) String modelNo) {
+    	return repository.findFilteredCustomerDetails(modelNo, customerId );
     }
     
     @Override

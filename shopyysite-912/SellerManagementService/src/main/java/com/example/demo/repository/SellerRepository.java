@@ -23,7 +23,7 @@ public interface SellerRepository extends JpaRepository<InventoryItem, Integer> 
 	@Query("SELECT i FROM InventoryItem i " +
 		       "WHERE i.seller_id = :sellerId AND i.is_deleted = 0 " +
 		       "AND (:categoryId IS NULL OR i.Category_id = :categoryId) " +
-		       "AND (:modelNo IS NULL OR i.Model_no = :modelNo) " +
+		       "AND ((:modelNo IS NULL OR :modelNo = '') OR i.Model_no = :modelNo) " +
 		       "AND (:warranty IS NULL OR i.warranty = :warranty) " +
 		       "AND (:purchaseDate IS NULL OR i.purchase_date = :purchaseDate)")
 		List<InventoryItem> findByFilters(
@@ -33,5 +33,6 @@ public interface SellerRepository extends JpaRepository<InventoryItem, Integer> 
 		    @Param("warranty") Integer warranty,
 		    @Param("purchaseDate") LocalDate purchaseDate
 		);
+
 
 }

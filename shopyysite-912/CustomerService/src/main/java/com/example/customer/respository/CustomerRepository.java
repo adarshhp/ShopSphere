@@ -27,13 +27,14 @@ public interface CustomerRepository extends JpaRepository<CustomerDetails, Integ
     Integer deleteCustomer(Integer purchase_Id);
     
     @Query("SELECT c FROM CustomerDetails c WHERE c.isDeleted = 0 AND " +
-    		"(:modelNo IS NULL OR c.model_no LIKE %:modelNo%) AND " + "(:customerId IS NULL OR c.customerId = :customerId) AND " + 
-    		"(:purchaseDateStart IS NULL OR c.purchase_date >= :purchaseDateStart) AND " + "(:purchaseDateEnd IS NULL OR c.purchase_date <= :purchaseDateEnd)")
-     List<CustomerDetails> findFilteredCustomerDetails(
-         @Param("modelNo") String modelNo,
-         @Param("customerId") Integer customerId, 
-         @Param("purchaseDateStart") LocalDate purchaseDateStart,
-         @Param("purchaseDateEnd") LocalDate purchaseDateEnd
-     );
+    	       "(:modelNo IS NULL OR c.model_no = :modelNo) AND " +
+    	       "(:customerId IS NULL OR c.customerId = :customerId)")
+    	List<CustomerDetails> findFilteredCustomerDetails(
+    	    @Param("modelNo") String modelNo,
+    	    @Param("customerId") Integer customerId
+    	);
+
+
+
 
 }
