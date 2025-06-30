@@ -18,7 +18,7 @@ public interface PurchaseRepository extends JpaRepository<PurchaseTable,Integer>
 	@Query("SELECT p FROM PurchaseTable p " +
 		       "WHERE p.is_deleted = 0 " +
 		       "AND (:sellerId IS NULL OR p.seller_id = :sellerId) " +
-		       "AND (:modelNo IS NULL OR LOWER(p.modelNo) = LOWER(:modelNo))")
+		       "AND (:modelNo IS NULL OR p.modelNo = :modelNo)")
 		List<PurchaseTable> findFilteredPurchases(
 		    @Param("sellerId") Integer sellerId,
 		    @Param("modelNo") String modelNo

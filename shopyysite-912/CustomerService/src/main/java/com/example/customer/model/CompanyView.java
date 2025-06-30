@@ -19,9 +19,8 @@ public class CompanyView {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer warranty_request_id;
 	
-	@NotBlank(message = "Customer ID required")
+	@NotNull(message = "Customer ID required")
 	private Integer customer_id;
-	@NotBlank(message = "Request date required")
 	private LocalDate request_date;
 	@NotBlank(message = "Customer name required")
 	private String customer_name;
@@ -30,9 +29,7 @@ public class CompanyView {
 	private String customer_email;
 	private String phone_number;
 	private String model_no;
-	@NotBlank(message = "Purchase date required")
 	private LocalDate purchase_date;
-	@NotBlank(message = "Warranty period required")
 	private LocalDate warranty_period;
 	@NotBlank(message = "Product image required")
 	private String image;

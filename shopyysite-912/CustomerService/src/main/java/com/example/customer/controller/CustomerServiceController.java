@@ -53,9 +53,16 @@ public class CustomerServiceController {
 	
 	
 	@GetMapping("/warranty-requests-customer")
-	public List<CustomerDetails> getWarrantyRequests(@RequestParam Integer customerId,@RequestParam String modelNo, @RequestParam LocalDate purchaseDateStart, @RequestParam LocalDate purchaseDateEnd) {
-	    return service.getWarrantyRequests( customerId,modelNo, purchaseDateStart, purchaseDateEnd);
+	public List<CustomerDetails> getWarrantyRequests(
+	        @RequestParam Integer customerId,
+	        @RequestParam(required = false) String modelNo) {
+
+	    // Sanitize modelNo input
+	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? null : modelNo.trim();
+
+	    return service.getWarrantyRequests(customerId, modelNoSanitized);
 	}
+
 	
 	@PostMapping("/raise-warranty-request")
 	public ResponseEntity<?> raiseWarrantyRequest(@Valid @RequestBody RaiseWarrantyPayload view, BindingResult bindingResult) {
@@ -66,9 +73,18 @@ public class CustomerServiceController {
 		return ResponseEntity.ok(response);
 	}
 	@GetMapping("/raised-warranty-requests-customer")
-	public List<CompanyView> getRaisedWarrantyRequestsForCustomer(@RequestParam Integer userId,@RequestParam Integer status,@RequestParam String modelNo){
-		return service.getRaisedWarrantyRequestsForCustomer(userId, status, modelNo);
+	public List<CompanyView> getRaisedWarrantyRequestsForCustomer(
+	    @RequestParam Integer userId,
+	    @RequestParam(required = false) Integer status,
+	    @RequestParam(required = false) String modelNo
+	) {
+	    // Sanitize modelNo to treat empty or blank input as null
+	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? null : modelNo.trim();
+
+	    return service.getRaisedWarrantyRequestsForCustomer(userId, status, modelNoSanitized);
 	}
+
+
 	
 	@GetMapping("/getraised-warranty-requests")
     public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id, Integer status, String modelNo, LocalDate purchaseDate, LocalDate warrantyPeriod, Integer customerId, LocalDate requestDateStart, LocalDate requestDateEnd ) {
