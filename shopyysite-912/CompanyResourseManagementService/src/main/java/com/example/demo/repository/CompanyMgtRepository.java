@@ -1,9 +1,11 @@
 package com.example.demo.repository;
 
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,13 +14,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.ProductDetails;
-import com.example.demo.response.PostResponse;
 
 @Repository
 public interface CompanyMgtRepository extends JpaRepository<ProductDetails, Integer> {
    
-	@Query("Select u from ProductDetails u where u.Company_id = :company_id")
-	public List<ProductDetails> getProducts(@Param("company_id") Integer company_id);
+	@Query("SELECT p FROM ProductDetails p\r\n"+ "WHERE p.Company_id = :companyId\r\n"+ "AND (:holderStatus IS NULL OR p.HolderStatus = :holderStatus)\r\n"+ "AND (:productCategory IS NULL OR p.Product_category = :productCategory)\r\n"
+			+ "AND (:manDate IS NULL OR p.Man_date = :manDate)")
+	 Page<ProductDetails> getProducts(@Param("companyId") Integer companyId,@Param("holderStatus") Integer holderStatus,
+		        @Param("productCategory") String productCategory,@Param("manDate") LocalDate manDate,Pageable pageable
+		    );
 	
 	@Query("Select u from ProductDetails u where u.Model_no=:Model_no")
 	ProductDetails getProductDetailsByModelNo(@RequestParam String Model_no);
