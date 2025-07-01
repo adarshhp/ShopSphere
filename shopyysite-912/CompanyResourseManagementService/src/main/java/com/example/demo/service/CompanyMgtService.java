@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -37,10 +40,12 @@ public class CompanyMgtService implements ICompanyMgtService {
 	    return response;
 	}
 
-@Override
-public List<ProductDetails> getProducts(@RequestParam Integer company_id){
-	return companyMgtRepository.getProducts(company_id);
-}
+	@Override
+	public Page<ProductDetails> getProducts(Integer companyId, Integer holderStatus, String productCategory, LocalDate manDate, Pageable pageable) {
+		return companyMgtRepository.getProducts(companyId, holderStatus, productCategory, manDate, pageable);
+	}
+
+
 
 @Override
 public ProductDetails getProductDetailsByModelNo(@RequestParam String Model_no) {
@@ -77,5 +82,6 @@ public PostResponse ChangeholderStatus(@RequestParam String Model_no,@RequestPar
 	}
 	return pr;
 }
+
 
 }

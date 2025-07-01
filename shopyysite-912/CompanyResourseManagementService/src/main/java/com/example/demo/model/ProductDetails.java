@@ -7,7 +7,6 @@
 	import jakarta.persistence.GenerationType;
 	import jakarta.persistence.Id;
 	import jakarta.persistence.Table;
-	import jakarta.validation.constraints.DecimalMin;
 	import jakarta.validation.constraints.Min;
 	import jakarta.validation.constraints.NotBlank;
 	import jakarta.validation.constraints.NotNull;
@@ -47,7 +46,7 @@
 	
 			@NotNull(message = "Product image is required")
 			private String Product_image; 
-	
+			
 			@NotNull(message = "Company ID is required")
 			private Integer Company_id; 
 			
