@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -87,9 +91,37 @@ public class CustomerServiceController {
 
 	
 	@GetMapping("/getraised-warranty-requests")
-    public List<CompanyView> getWarrayRequestsByCustomers(Integer company_id, Integer status, String modelNo, LocalDate purchaseDate, LocalDate warrantyPeriod, Integer customerId, LocalDate requestDateStart, LocalDate requestDateEnd ) {
-        return service.getWarrayRequestsByCustomers(company_id, customerId, modelNo, requestDateEnd, requestDateEnd, customerId, requestDateEnd, requestDateEnd);
-    }
+	public Page<CompanyView> getWarrayRequestsByCustomers(
+	    @RequestParam Integer company_id, // required
+	    @RequestParam(required = false) Integer status,
+	    @RequestParam(required = false) String modelNo,
+	    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchaseDate,
+	    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate warrantyPeriod,
+	    @RequestParam(required = false) Integer customerId,
+	    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate requestDateStart,
+	    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate requestDateEnd,
+	    @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
+	) {
+	    // Sanitize String parameters
+	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? "" : modelNo.trim();
+	    Pageable pageable = PageRequest.of(page, size);
+
+
+	    return service.getWarrayRequestsByCustomers(
+	        company_id,
+	        status,
+	        modelNoSanitized,
+	        purchaseDate,
+	        warrantyPeriod,
+	        customerId,
+	        requestDateStart,
+	        requestDateEnd,
+	        pageable
+	    );
+	}
+
+
 	
 	
 	 @PostMapping("/editregistered-warranty")

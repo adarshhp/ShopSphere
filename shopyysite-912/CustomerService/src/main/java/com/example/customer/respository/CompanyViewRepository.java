@@ -3,6 +3,8 @@ package com.example.customer.respository;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,22 +28,26 @@ public interface CompanyViewRepository extends JpaRepository<CompanyView, Intege
 	Integer deleteRaisedWarranty(@RequestParam Integer raised_Id);
 	
 	@Query("SELECT c FROM CompanyView c WHERE " +
-	           "(:status IS NULL OR c.warranty_status = :status) AND " +
-	           "(:modelNo IS NULL OR c.model_no LIKE %:modelNo%) AND " +
-	           "(:purchaseDate IS NULL OR c.purchase_date = :purchaseDate) AND " + 
-	           "(:warrantyPeriod IS NULL OR c.warranty_period = :warrantyPeriod) AND " +
-	           "(:customerId IS NULL OR c.customer_id = :customerId) AND " + 
-	           "(:requestDateStart IS NULL OR c.request_date >= :requestDateStart) AND " +
-	           "(:requestDateEnd IS NULL OR c.request_date <= :requestDateEnd)")
-	List<CompanyView> findFilteredCompanyViews(
-	        @Param("status") Integer status,
-	        @Param("modelNo") String modelNo,
-	        @Param("purchaseDate") LocalDate purchaseDate, 
-	        @Param("warrantyPeriod") LocalDate warrantyPeriod, 
-	        @Param("customerId") Integer customerId, 
-	        @Param("requestDateStart") LocalDate requestDateStart,
-	        @Param("requestDateEnd") LocalDate requestDateEnd
-	    );
+		       "(:status IS NULL OR c.warranty_status = :status) AND " +
+		       "(:modelNo IS NULL OR c.model_no LIKE CONCAT('%', :modelNo, '%')) AND " +
+		       "(:purchaseDate IS NULL OR c.purchase_date = :purchaseDate) AND " + 
+		       "(:warrantyPeriod IS NULL OR c.warranty_period = :warrantyPeriod) AND " +
+		       "(:customerId IS NULL OR c.customer_id = :customerId) AND " + 
+		       "(:requestDateStart IS NULL OR c.request_date >= :requestDateStart) AND " +
+		       "(:requestDateEnd IS NULL OR c.request_date <= :requestDateEnd)")
+	Page<CompanyView> findFilteredCompanyViews(
+		        @Param("status") Integer status,
+		        @Param("modelNo") String modelNo,
+		        @Param("purchaseDate") LocalDate purchaseDate, 
+		        @Param("warrantyPeriod") LocalDate warrantyPeriod, 
+		        @Param("customerId") Integer customerId, 
+		        @Param("requestDateStart") LocalDate requestDateStart,
+		        @Param("requestDateEnd") LocalDate requestDateEnd,
+		        Pageable pageable
+		);
+
+	
+	
 	@Query("SELECT c FROM CompanyView c WHERE c.customer_id = :userId AND " +
 	           "(:status IS NULL OR c.warranty_status = :status) AND " +
 	           "(:modelNo IS NULL OR c.model_no LIKE %:modelNo%)")

@@ -45,12 +45,17 @@ public class CompanyMgtController {
 	        @RequestParam(required = false) String productCategory,
 	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate manDate,
 	        @RequestParam(defaultValue = "0") int page,
-	        @RequestParam(defaultValue = "10") int size) {
+	        @RequestParam(defaultValue = "10") int size,
+	        @RequestParam(required = false) String ModelNo
+			) 
+	{
 
 	    String sanitizedCategory = (productCategory == null || productCategory.trim().isEmpty()) ? null : productCategory.trim();
+	    String sanitizedModelNo = (ModelNo == null || ModelNo.trim().isEmpty()) ? "" : ModelNo.trim();
+
 
 	    Pageable pageable = PageRequest.of(page, size);
-	    return service.getProducts(company_id, holderStatus, sanitizedCategory, manDate, pageable);
+	    return service.getProducts(company_id, holderStatus, sanitizedCategory,sanitizedModelNo, manDate, pageable);
 	}
 	
 	@GetMapping("/getProductDetailsByModelNo")

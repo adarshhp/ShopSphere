@@ -12,7 +12,7 @@ import com.example.demo.response.PostResponse;
 
 public interface ICompanyMgtService {
 	public PostResponse postProduct(ProductDetails productDetails);
-	public Page<ProductDetails> getProducts(@RequestParam Integer companyId, Integer holderStatus, String productCategory,
+	public Page<ProductDetails> getProducts(@RequestParam Integer companyId, Integer holderStatus, String productCategory,String ModelNo,
 		    LocalDate manDate, Pageable pageable);
 	public ProductDetails getProductDetailsByModelNo(@RequestParam String Model_no);
 	public List<ProductDetails> getProductsByModelNos(@RequestParam List<String> modelNos);
