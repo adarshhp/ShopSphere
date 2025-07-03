@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,15 +65,15 @@ public class SellerService implements ISellerService {
     }
 	
 	@Override
-	public List<InventoryItem> GetAllInventory(Integer sellerId, Integer categoryId, String modelNo, Integer warranty, LocalDate purchaseDate) {
-	    return sellerRepository.findByFilters(sellerId, categoryId, modelNo, warranty, purchaseDate);
+	public Page<PurchaseTable> GetPurchases(Integer sellerId, String modelNo, Pageable pageable) {
+	    return purchaseRepository.findFilteredPurchases(sellerId, modelNo, pageable);
 	}
 
-	
 	@Override
-	public List<PurchaseTable> GetPurchases(Integer sellerId, String modelNo) {
-	    return purchaseRepository.findFilteredPurchases(sellerId,modelNo);
+	public Page<InventoryItem> GetAllInventory(Integer sellerId, Integer categoryId, String modelNo, Integer warranty, LocalDate purchaseDate, Pageable pageable) {
+	    return sellerRepository.findByFilters(sellerId, categoryId, modelNo, warranty, purchaseDate, pageable);
 	}
+
 
 	@Transactional
 	public PostResponse EditInventory(InventoryItem newItem, Integer purchaseId) {

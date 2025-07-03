@@ -2,6 +2,8 @@ package com.example.demo.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,10 +21,12 @@ public interface PurchaseRepository extends JpaRepository<PurchaseTable,Integer>
 		       "WHERE p.is_deleted = 0 " +
 		       "AND (:sellerId IS NULL OR p.seller_id = :sellerId) " +
 		       "AND (:modelNo IS NULL OR p.modelNo = :modelNo)")
-		List<PurchaseTable> findFilteredPurchases(
+		Page<PurchaseTable> findFilteredPurchases(
 		    @Param("sellerId") Integer sellerId,
-		    @Param("modelNo") String modelNo
+		    @Param("modelNo") String modelNo,
+		    Pageable pageable
 		);
+
 
 	
 	@Modifying

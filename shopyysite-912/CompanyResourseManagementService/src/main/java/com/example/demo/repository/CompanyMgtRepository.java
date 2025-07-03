@@ -18,10 +18,14 @@ import com.example.demo.model.ProductDetails;
 @Repository
 public interface CompanyMgtRepository extends JpaRepository<ProductDetails, Integer> {
    
-	@Query("SELECT p FROM ProductDetails p\r\n"+ "WHERE p.Company_id = :companyId\r\n"+ "AND (:holderStatus IS NULL OR p.HolderStatus = :holderStatus)\r\n"+ "AND (:productCategory IS NULL OR p.Product_category = :productCategory)\r\n"
-			+ "AND (:manDate IS NULL OR p.Man_date = :manDate)")
+	@Query("SELECT p FROM ProductDetails p\r\n"+ "WHERE p.Company_id = :companyId\r\n"
+	        + "AND (:holderStatus IS NULL OR p.HolderStatus = :holderStatus)\r\n"
+			+ "AND (:productCategory IS NULL OR p.Product_category = :productCategory)\r\n"
+			+ "AND (:manDate IS NULL OR p.Man_date = :manDate)\r\n"
+		    + "AND (:modelNo IS NULL OR p.Model_no LIKE CONCAT('%', :modelNo, '%'))" 
+			)
 	 Page<ProductDetails> getProducts(@Param("companyId") Integer companyId,@Param("holderStatus") Integer holderStatus,
-		        @Param("productCategory") String productCategory,@Param("manDate") LocalDate manDate,Pageable pageable
+		        @Param("productCategory") String productCategory,@Param("modelNo") String modelNo, @Param("manDate") LocalDate manDate,Pageable pageable
 		    );
 	
 	@Query("Select u from ProductDetails u where u.Model_no=:Model_no")

@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -6,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -67,28 +70,34 @@ public class SellerController {
 
 	
 	@GetMapping("/GetPurchases")
-	public List<PurchaseTable> GetPurchases(@RequestParam(required = false) Integer Seller_Id, 
-	                                        @RequestParam(required = false) String modelNo) {
-	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? null : modelNo.trim();
+	public Page<PurchaseTable> GetPurchases(
+	        @RequestParam(required = false) Integer Seller_Id,
+	        @RequestParam(required = false) String modelNo,
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "5") int size) {
 
-	    return isellerservice.GetPurchases(Seller_Id,modelNoSanitized);
+	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? null : modelNo.trim();
+	    Pageable pageable = PageRequest.of(page, size);
+	    return isellerservice.GetPurchases(Seller_Id, modelNoSanitized, pageable);
 	}
 
 	
 	@GetMapping("/allinventory")
-	public List<InventoryItem> GetAllInventory(
+	public Page<InventoryItem> GetAllInventory(
 	        @RequestParam Integer Seller_Id,
 	        @RequestParam(required = false) String categoryId,
 	        @RequestParam(required = false) String modelNo,
 	        @RequestParam(required = false) String warranty,
-	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchaseDate) {
+	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchaseDate,
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "5") int size) {
 
-	    // Convert empty strings to null and parse to Integer
 	    Integer categoryIdInt = (categoryId == null || categoryId.trim().isEmpty()) ? null : Integer.valueOf(categoryId);
 	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? null : modelNo.trim();
 	    Integer warrantyInt = (warranty == null || warranty.trim().isEmpty()) ? null : Integer.valueOf(warranty);
 
-	    return isellerservice.GetAllInventory(Seller_Id, categoryIdInt, modelNoSanitized, warrantyInt, purchaseDate);
+	    Pageable pageable = PageRequest.of(page, size);
+	    return isellerservice.GetAllInventory(Seller_Id, categoryIdInt, modelNoSanitized, warrantyInt, purchaseDate, pageable);
 	}
 
 

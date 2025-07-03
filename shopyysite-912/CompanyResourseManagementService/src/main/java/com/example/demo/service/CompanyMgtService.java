@@ -41,8 +41,8 @@ public class CompanyMgtService implements ICompanyMgtService {
 	}
 
 	@Override
-	public Page<ProductDetails> getProducts(Integer companyId, Integer holderStatus, String productCategory, LocalDate manDate, Pageable pageable) {
-		return companyMgtRepository.getProducts(companyId, holderStatus, productCategory, manDate, pageable);
+	public Page<ProductDetails> getProducts(Integer companyId, Integer holderStatus, String productCategory, String ModelNo, LocalDate manDate, Pageable pageable) {
+		return companyMgtRepository.getProducts(companyId, holderStatus, productCategory,ModelNo, manDate, pageable);
 	}
 
 
