@@ -92,10 +92,10 @@ public class SellerController {
 	        @RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "5") int size) {
 
-	    Integer categoryIdInt = (categoryId == null || categoryId.trim().isEmpty()) ? null : Integer.valueOf(categoryId);
+		Integer categoryIdInt = (categoryId == null || categoryId.trim().isEmpty()) ? null : Integer.valueOf(categoryId);
 	    String modelNoSanitized = (modelNo == null || modelNo.trim().isEmpty()) ? null : modelNo.trim();
 	    Integer warrantyInt = (warranty == null || warranty.trim().isEmpty()) ? null : Integer.valueOf(warranty);
-
+System.out.println(categoryIdInt+"categoryIdInt");
 	    Pageable pageable = PageRequest.of(page, size);
 	    return isellerservice.GetAllInventory(Seller_Id, categoryIdInt, modelNoSanitized, warrantyInt, purchaseDate, pageable);
 	}

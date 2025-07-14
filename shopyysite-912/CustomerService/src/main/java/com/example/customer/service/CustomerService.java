@@ -95,7 +95,7 @@ public class CustomerService implements ICustomerService  {
 		cv.setPhone_number(view.getPhone_number());
 		cv.setPurchase_date(view.getPurchase_date());
 		cv.setModel_no(view.getModel_no());
-		cv.setImage(view.getImage());
+		cv.setProductImages(view.getProduct_images());
 		cv.setRequest_date(view.getRequest_date());
 		cv.setCompany_id(view.getCompany_id());
 		cv.setReason(view.getReason());

@@ -26,7 +26,7 @@ import com.example.signup.service.IUserService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/")
 public class SignupController {

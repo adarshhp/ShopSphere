@@ -1,8 +1,13 @@
 	package com.example.demo.model;
-	
+	import jakarta.persistence.JoinColumn;
 	import java.time.LocalDate;
-	
-	import jakarta.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
 	import jakarta.persistence.GeneratedValue;
 	import jakarta.persistence.GenerationType;
 	import jakarta.persistence.Id;
@@ -44,8 +49,10 @@
 			@Min(value = 0, message = "Warranty tenure cannot be negative")
 			private Integer Warrany_tenure; 
 	
-			@NotNull(message = "Product image is required")
-			private String Product_image; 
+			 @ElementCollection
+			    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "prod_id"))
+			    @Column(name = "image_url") // Increased length for base64
+			    private List<String> productImages = new ArrayList<>();
 			
 			@NotNull(message = "Company ID is required")
 			private Integer Company_id; 
@@ -100,12 +107,15 @@
 			public void setWarrany_tenure(Integer warrany_tenure) {
 				Warrany_tenure = warrany_tenure;
 			}
-			public String getProduct_image() {
-				return Product_image;
-			}
-			public void setProduct_image(String product_image) {
-				Product_image = product_image;
-			}
+			 public List<String> getProductImages() {
+			        return productImages;
+			    }
+			    
+			    public void setProductImages(List<String> productImages) {
+			        this.productImages = productImages;
+			    }
+			    
+			    
 			public Integer getCompany_id() {
 				return Company_id;
 			}
