@@ -26,17 +26,20 @@ public class CompanyMgtService implements ICompanyMgtService {
 	
 	@Override
 	public PostResponse postProduct(ProductDetails productDetails) {
-	    ProductDetails savedProduct = companyMgtRepository.save(productDetails);
-
 	    PostResponse response = new PostResponse();
-	    if (savedProduct != null && savedProduct.getProd_id() != null) { 
+	    
+	    try {
+	        // The productDetails object now contains a list of base64 images
+	        ProductDetails savedProduct = companyMgtRepository.save(productDetails);
+	        
 	        response.setStatusCode(200);
-	        response.setMessage("Done");
-	    } else {
-	        response.setStatusCode(400);
-	        response.setMessage("Can't Do");
+	        response.setMessage("Product created successfully with " + 
+	                          savedProduct.getProductImages().size() + " images");
+	    } catch (Exception e) {
+	        response.setStatusCode(500);
+	        response.setMessage("Error creating product: " + e.getMessage());
 	    }
-
+	    
 	    return response;
 	}
 

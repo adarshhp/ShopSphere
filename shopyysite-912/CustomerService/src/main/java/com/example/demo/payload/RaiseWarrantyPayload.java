@@ -1,6 +1,7 @@
 package com.example.demo.payload;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
@@ -23,7 +24,7 @@ public class RaiseWarrantyPayload {
 	private String model_no;
 	@NotNull(message = "Purchase date is required")
 	private LocalDate purchase_date;
-	private String image;
+    private List<String> product_images;
 	@NotNull(message = "Company ID is required")
 	private Integer company_id;
 	@NotBlank(message = "Reason required")
@@ -77,12 +78,13 @@ public class RaiseWarrantyPayload {
 	public void setPurchase_date(LocalDate purchase_date) {
 		this.purchase_date = purchase_date;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
+	 public List<String> getProduct_images() {
+	        return product_images;
+	    }
+
+	    public void setProduct_images(List<String> product_images) {
+	        this.product_images = product_images;
+	    }
 	public Integer getCompany_id() {
 		return company_id;
 	}

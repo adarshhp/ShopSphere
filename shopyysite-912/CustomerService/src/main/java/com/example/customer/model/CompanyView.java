@@ -1,11 +1,17 @@
 package com.example.customer.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,8 +37,12 @@ public class CompanyView {
 	private String model_no;
 	private LocalDate purchase_date;
 	private LocalDate warranty_period;
-	@NotBlank(message = "Product image required")
-	private String image;
+	
+	 @ElementCollection
+	 @CollectionTable(name = "request_images", joinColumns = @JoinColumn(name = "prod_id"))
+	 @Column(name = "image_url",length=10000)
+	 private List<String> productImages = new ArrayList<>();
+		
 	private Integer warranty_status=1;
 	@NotNull(message = "Company ID is required")
 	private Integer company_id;
@@ -112,12 +122,13 @@ public class CompanyView {
 	public void setWarranty_period(LocalDate warranty_period) {
 		this.warranty_period = warranty_period;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
+	 public List<String> getProductImages() {
+	        return productImages;
+	    }
+	    
+	    public void setProductImages(List<String> productImages) {
+	        this.productImages = productImages;
+	    }
 	public Integer getWarranty_status() {
 		return warranty_status;
 	}
