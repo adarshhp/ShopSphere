@@ -66,7 +66,7 @@ public class CustomerService implements ICustomerService  {
 	public Page<CompanyView> getWarrayRequestsByCustomers(Integer company_id, Integer status, String modelNo, LocalDate purchaseDate, 
 			LocalDate warrantyPeriod, Integer customerId, LocalDate requestDateStart, LocalDate requestDateEnd , Pageable pageable ) {
 	   
-	    return companyviewrepository.findFilteredCompanyViews(status,modelNo,purchaseDate,warrantyPeriod,customerId,requestDateStart,requestDateEnd,pageable);
+	    return companyviewrepository.findFilteredCompanyViews(company_id,status,modelNo,purchaseDate,warrantyPeriod,customerId,requestDateStart,requestDateEnd,pageable);
 	}
 
 	

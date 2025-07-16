@@ -19,7 +19,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="copmany_view_table")
+@Table(name="company_view_table")
 public class CompanyView {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

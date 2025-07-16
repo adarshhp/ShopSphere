@@ -78,6 +78,7 @@ public class SignupController {
 	        return ResponseEntity.ok(response);
 	    
 	}
+	
 	@GetMapping("/getuserdetails")
 	public UserDetails GetUserDetails(@RequestParam Integer user_Id) {
 		return service.GetUserDetails(user_Id);

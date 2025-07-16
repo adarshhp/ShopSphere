@@ -84,6 +84,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public SignInResponse CreateUser(UserDetails userDetails) {
+		userDetails.setPassword(passwordEncoder.encode(userDetails.getPassword()));
 		UserDetails savedUser= userRepository.save(userDetails);
 		SignInResponse response = new SignInResponse();
 		if (savedUser != null && savedUser.getUserId() != null) {
