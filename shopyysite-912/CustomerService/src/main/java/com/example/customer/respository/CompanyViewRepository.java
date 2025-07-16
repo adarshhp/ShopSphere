@@ -29,6 +29,7 @@ public interface CompanyViewRepository extends JpaRepository<CompanyView, Intege
 	
 	@Query("SELECT c FROM CompanyView c WHERE " +
 		       "(:status IS NULL OR c.warranty_status = :status) AND " +
+		       "(c.company_id = :company_id) AND " +
 		       "(:modelNo IS NULL OR c.model_no LIKE CONCAT('%', :modelNo, '%')) AND " +
 		       "(:purchaseDate IS NULL OR c.purchase_date = :purchaseDate) AND " + 
 		       "(:warrantyPeriod IS NULL OR c.warranty_period = :warrantyPeriod) AND " +
@@ -36,6 +37,7 @@ public interface CompanyViewRepository extends JpaRepository<CompanyView, Intege
 		       "(:requestDateStart IS NULL OR c.request_date >= :requestDateStart) AND " +
 		       "(:requestDateEnd IS NULL OR c.request_date <= :requestDateEnd)")
 	Page<CompanyView> findFilteredCompanyViews(
+			@Param("company_id") Integer company_id,
 		        @Param("status") Integer status,
 		        @Param("modelNo") String modelNo,
 		        @Param("purchaseDate") LocalDate purchaseDate, 

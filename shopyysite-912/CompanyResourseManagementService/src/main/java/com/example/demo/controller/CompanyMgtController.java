@@ -1,5 +1,7 @@
 package com.example.demo.controller;
-
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.http.MediaType;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.service.annotation.PostExchange;
 
 import com.example.demo.model.ProductDetails;
 import com.example.demo.response.PostResponse;
@@ -37,6 +41,11 @@ public class CompanyMgtController {
 		return service.postProduct(productDetails);
 	}
 	
+	@PostMapping(value = "/bulkupload-products", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public PostResponse bulkUploadProducts(@RequestParam("file") MultipartFile postedFile) {
+	    return service.bulkUploadProducts(postedFile);
+	}
+
 	
 	@GetMapping("/getProducts")
 	public Page<ProductDetails> getProducts(

@@ -1,18 +1,23 @@
 package com.example.demo.service;
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.model.ProductDetails;
 import com.example.demo.repository.CompanyMgtRepository;
 import com.example.demo.response.PostResponse;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -41,6 +46,38 @@ public class CompanyMgtService implements ICompanyMgtService {
 	    }
 	    
 	    return response;
+	}
+	
+	@Override
+	public PostResponse bulkUploadProducts(@Parameter(description = "File containing product data", 
+            schema = @Schema(type = "string", format = "binary"))
+  @RequestParam("file") MultipartFile postedFile)  {
+		PostResponse response = new PostResponse();
+		if (postedFile != null && !postedFile.isEmpty() && !Objects.requireNonNull(postedFile.getOriginalFilename()).isEmpty()) {
+	        String fileName = postedFile.getOriginalFilename();
+	        String fileContentType = postedFile.getContentType();
+	        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+
+	        int rowCount = 0;
+	        if (fileExtension == ".xls" || fileExtension == ".xlsx")
+	        {
+	        	try {
+					InputStream stream = postedFile.getInputStream();
+					
+					
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	        
+	        System.out.println("File Name: " + fileName);
+	        System.out.println("Content Type: " + fileContentType);
+	        System.out.println("Extension: " + fileExtension);
+
+	    }
+		return response;
 	}
 
 	@Override
